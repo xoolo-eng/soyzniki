@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Профиль {{ user.name }} {{ user.family }}</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'user/css/user_page.css'%}">
+{% endblock style %}
+{% block user %}
+<div id="user">
+	<div class="header">
+		<h3> {{ user_page.name }} </h3>
+	</div>
+	<div id="user_page">
+		<div id="user_items">
+			<img src="{% static 'user/images/user.png'%}">
+			<div id="items">
+				<ul>
+					<li>
+						<a class="big_button" href="/user/{{ user.login }}/edit/">Редактировать данные</a>
+					</li>
+					<li>
+						<a class="big_button" href="/user/{{ user.login }}/edit_pass/">Изменить пароль</a>
+					</li>
+					<li>
+						<a class="big_button" href="/user/{{ user.login }}/delete/">Удалить профиль</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% if view %}
+		<div id="user_info">
+			<div id="items_button">
+				<img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+			</div>
+			<ul>
+				<li><p><span>Логин: </span>{{ user_page.name }}</p></li>
+				<li><p><span>Имя: </span>{{ user_page.name }}</p></li>
+				<li><p><span>Фамилия: </span>{{ user_page.family }}</p></li>
+				<li><p><span>E-mail: </span>{{ user_page.email }}</p></li>
+				<li><p><span>Номер телефона: </span>{{ user_page.telephone }}</p></li>
+				<li><p><span>Страна: </span>{{ user_page.country.name_ru }}</p></li>
+				<li><p><span>Область: </span>{{ user_page.region.name_ru }}</p></li>
+				<li><p><span>Район: </span>{{ user_page.district.name_ru }}</p></li>
+				<li><p><span>Населенный пункт: </span>{{ user_page.city.name_ru }}</p></li>
+				<li><p><span>Улица: </span>{{ user_page.street }}</p></li>
+			</ul>
+		</div>
+		{% else %}
+		<div id="user_info">
+			<div id="items_button">
+				<img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+			</div>
+			<ul>
+				<li><p><span>Имя: </span>{{ user_page.name }}</p></li>
+				<li><p><span>Фамилия: </span>{{ user_page.family }}</p></li>
+				<li><p><span>Страна: </span>{{ user_page.country.name_ru }}</p></li>
+				<li><p><span>Область: </span>{{ user_page.region.name_ru }}</p></li>
+				<li><p><span>Район: </span>{{ user_page.district.name_ru }}</p></li>
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock user %}
+{% block script %}
+<script src="{% static 'user/js/user.js' %}"></script>
+{% endblock script %}

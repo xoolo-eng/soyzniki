@@ -1,0 +1,25 @@
+
+
+#partner_delete{
+  margin-right: 10px;
+}
+
+form {
+
+}
+form ul {
+  width: 280px;
+  margin: auto;
+}
+
+form ul li input {
+  width: 100%;
+}
+
+
+@media all and (max-width: 900px) {
+
+  #partner_delete {
+    margin-right: 0;
+  }
+}

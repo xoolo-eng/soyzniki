@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles main_tags %}
+{% block title %}
+<title>Союзники Новости</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'news/css/news.css'%}">
+{% endblock style %}
+{% block news %}
+<div id="news">
+  <div class="header">
+    <h3>Новости</h3>
+  </div>
+  <div id="all_categories">
+    <ul>
+      {% for rubric in all_rubric %}
+      {{ rubric|safe }}
+      {% endfor %}
+    </ul>
+  </div>
+  {% for news in all_news %}
+  <div class="one_news">
+    <div class="news_image">
+      <a class="block" href="/news/{{ news.link }}/">
+        <img src="/media/{{ news.image.all.0.prev_image }}" src="{{ news.image.all.0.name }}" />
+      </a>
+      <a class="red_button" href="/news/rubric/{{ news.rubric.name_en|lower }}/1/">{{ news.rubric|truncatechars:15 }}</a>
+    </div>
+    <div class="news_content">
+      <a class="block" href="/news/{{ news.link }}/">
+        <h2>{{ news.title|truncatechars:25 }}</h2>
+        <p>{{ news.content|truncatechars:200 }}</p>
+      </a>
+      <p><a clas="base_link" href="/news/country/{{ news.country.name_en|to_link }}/1/">{{ news.country|truncatechars:15 }}</a> - {{ news.date_pub|date:"d.m.Y" }}</p>
+      {% if news.source %}
+      <p>Новость предоставлена <a clas="base_link" href="{{ news.link_source }}">{{ news.source }}</a></p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {% if pages.1 %}
+  <div id="pages">
+    <ul>
+      {% for page in pages %}
+      {{ page|safe }}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+{% endblock news %}

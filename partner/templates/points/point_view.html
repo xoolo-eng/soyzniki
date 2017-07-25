@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники {{ point.name }}</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/points_viev.css'%}">
+{% endblock style %}
+{% block partner %}
+<div id="view_point">
+    <div class="header">
+        <h3>{{ point.name }}</h3>
+    </div>
+    <div id="point_info">
+        <div id="service">
+            <h3>{{ point.servis }}</h3>
+            <p>{% if point.transport == 1 %}Все виды транспорта{% elif point.transpotr == 2%}Только легковой транспорт{% elif point.transport == 3 %}Только грузовой транспорт{% endif %}</p>
+        </div>
+        {% if point.thelephones %}
+        <div id="number">
+            <h3>Телефон</h3>
+            <p>{{ point.thelephones|safe }}</p>
+        </div>
+        {% endif %}
+        <div id="adres">
+            <h3>Адрес</h3>
+            <p>{{ point.country }}, {{ point.region }}<br/>{{ point.district }}, {{ point.city }}, {{ point.street }}</p>
+        </div>
+        <div id="work_time">
+            <h3>Время работы</h3>
+            {{ point.time_work|safe }}
+        </div>
+        {% if point.url %}
+        <div id="email">
+            <h3>Url</h3>
+            <a class="red_button" href="{{ point.url }}" target="_blank">{{ point.url }}</a>
+        </div>
+        {% endif %}
+        <div id="activities">
+            <h3>Описание</h3>
+            <p>{{ point.desc|safe }}</p>
+        </div>
+        <div id="coordinates">
+            <h3>Координаты</h3>
+            <p>Широта: {{ point.lat }}</p>
+            <p>Долгота: {{ point.lon }}</p>
+        </div>
+    </div>
+    <a class="big_button" href="{{ back }}">Назад</a>
+</div>
+{% endblock partner %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Новый пользователь</title>
+{% endblock title %}
+{% load staticfiles %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'user/css/user_add.css'%}">
+{% endblock style %}
+{% block user %}
+<div id="new_user">
+    <div class="header">
+        <h3>Регистрация</h3>
+    </div>
+    <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+        {{ form.country_id }}
+        {{ form.region_id }}
+        {{ form.district_id }}
+        {{ form.city_id }}
+        {% if form.non_field_errors %}
+        <div class="form_error">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div id="left_box">
+            <ul>
+                <li class="input">
+                    {% if form.login.errors %}
+                    <div class="input_error">{{ form.login.errors }}</div>
+                    {% endif %}
+                    <label for="login">{{ form.login.label }}</label>
+                    {{ form.login }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.name.errors %}
+                    <div class="input_error">{{ form.name.errors }}</div>
+                    {% endif %}
+                    <label for="name">{{ form.name.label }}</label>
+                    {{ form.name }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.family.errors %}
+                    <div class="input_error">{{ form.family.errors }}</div>
+                    {% endif %}
+                    <label for="family">{{ form.family.label }}</label>
+                    {{ form.family }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.email.errors %}
+                    <div class="input_error">{{ form.email.errors }}</div>
+                    {% endif %}
+                    <label for="email">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.telephone.errors %}
+                    <div class="input_error">{{ form.telephone.errors }}</div>
+                    {% endif %}
+                    <label for="telephone">{{ form.telephone.label }}</label>
+                    {{ form.telephone }}
+                    
+                </li>
+            </ul>
+        </div>
+        <div id="right_box">
+            <ul>
+                <li class="input">
+                    {% if form.country.errors %}
+                    <div class="input_error">{{ form.country.errors }}</div>
+                    {% endif %}
+                    <label for="country">{{ form.country.label }}</label>
+                    {{ form.country }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.region.errors %}
+                    <div class="input_error">{{ form.region.errors }}</div>
+                    {% endif %}
+                    <label for="region">{{ form.region.label }}</label>
+                    {{ form.region }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.district.errors %}
+                    <div class="input_error">{{ form.district.errors }}</div>
+                    {% endif %}
+                    <label for="district">{{ form.district.label }}</label>
+                    {{ form.district }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.city.errors %}
+                    <div class="input_error">{{ form.city.errors }}</div>
+                    {% endif %}
+                    <label for="city">{{ form.city.label }}</label>
+                    {{ form.city }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.street.errors %}
+                    <div class="input_error">{{ form.street.errors }}</div>
+                    {% endif %}
+                    <label for="street">{{ form.street.label }}</label>
+                    {{ form.street }}
+                    
+                </li>
+            </ul>
+        </div>
+        <div id="bottom_box">
+            <ul>
+                <li class="input">
+                    {% if form.password.errors %}
+                    <div class="input_error">{{ form.password.errors }}</div>
+                    {% endif %}
+                    <label for="password">{{ form.password.label }}</label>
+                    {{ form.password }}
+                    
+                </li>
+                <li class="input">
+                    {% if form.password_repeat.errors %}
+                    <div class="input_error">{{ form.password_repeat.errors }}</div>
+                    {% endif %}
+                    <label for="password_repeat">{{ form.password_repeat.label }}</label>
+                    {{ form.password_repeat }}
+                    
+                </li>
+                <li>
+                    {% if form.agreement.errors %}
+                    <div class="input_error">{{ form.agreement.errors }}</div>
+                    {% endif %}
+                    <label for="agreement">{{ form.agreement }} {{ form.agreement.label|safe }}</label>
+                    
+                </li>
+                <li>
+                    <input class="big_button" type="submit" value="Зарегестрироваться">
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+{% endblock user %}
+{% block script %}
+<script src="{% static 'soyzniki/js/custom_input.min.js'%}"></script>
+{% endblock script%}

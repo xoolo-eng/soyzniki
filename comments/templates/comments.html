@@ -1,0 +1,53 @@
+<section id="comments_page">
+    <div class="header">
+        <h3>Коментарии</h3>
+    </div>
+    <div id="form">
+        {% if comment_form %}
+        <form action="/comments/add" method="POST" autocomplete="off">
+            <ul>
+                {% csrf_token %}
+                {{ comment_form.applications }}
+                {{ comment_form.model }}
+                {{ comment_form.record_id }}
+                {{ comment_form.user}}
+                <li>
+                    <div class="errors">
+                        {{ comment_form.non_field_error }}                    
+                    </div>
+                </li>
+                <li class="input">
+                    <label for="comment">{{ comment_form.comment.label }}</label>
+                    {{ comment_form.comment }}
+                    <div class="errors">
+                        {{ comment_form.comment.errors }}                    
+                    </div>
+                </li>
+                <li>
+                    <input class="big_button" type="submit" name="submit" value="Отправить">
+                </li>
+            </ul>
+        </form>
+        {% else %}
+        <p>Что бы оставить коментарий необходимо <a href="/user/login/">Войти</a></p>
+        {% endif %}
+    </div>
+    {% if all_comments %}
+    {% for comment in all_comments %}
+    <div class="one_comment">
+        <div class="comment_date">
+            <div class="username">
+                <a href="/user/{{ comment.user.login }}/">{{ comment.user.name }}</a>
+            </div>
+            <div class="date">
+                <p>{{ comment.date_add|date:"d.m.Y" }}</p>
+            </div>
+        </div>
+
+        <p class="comment_content">{{ comment.comment }}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="margin-top: 10px">К данной записи нет коментариев</p>
+    {% endif %}
+</section>

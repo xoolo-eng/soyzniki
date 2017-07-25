@@ -1,0 +1,33 @@
+.hide_point {
+  background: #c9c9c9;
+}
+
+#points {
+  margin-right: 10px;
+}
+
+#all_points ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#all_points ul li {
+  flex-basis: 48%;
+  margin: 5px 0;
+  border-bottom: 1px solid #13445E;
+  padding: 3px;
+  text-align: center;
+}
+
+@media all and (max-width: 900px) {
+
+  #points {
+    margin-right: 0
+  }
+}
+@media all and (max-width: 720px) {
+  #all_points ul li {
+    flex-basis: 100%;
+  }
+}

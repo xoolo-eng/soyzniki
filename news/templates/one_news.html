@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Новости</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'news/css/news.css'%}">
+<link rel="stylesheet" href="{% static 'news/css/one_news.css'%}">
+<link rel="stylesheet" href="{% static 'comments/css/comments.css'%}">
+{% endblock style %}
+{% block news %}
+<div id="news">
+    <div class="header">
+        <h3>{{ news.title }}</h3>
+    </div>
+    {{ news.content|safe }}
+    {% if news.link_video %}
+    <iframe src="{{ news.link_video }}" frameborder="0" allowfullscreen class="video"></iframe>
+    {% endif %}
+    {% if back %}
+    <a class="big_button" href="{{ back }}">Назад</a>
+    {% endif %}
+    {% if comments %}
+    {{ comments }}
+    {% endif %}
+</div>
+{% endblock news %}

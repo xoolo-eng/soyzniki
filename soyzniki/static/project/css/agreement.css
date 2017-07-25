@@ -1,0 +1,8 @@
+ul, ol {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+p, li {
+    text-indent: 20px;
+}

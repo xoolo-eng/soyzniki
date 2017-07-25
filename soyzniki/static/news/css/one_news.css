@@ -1,0 +1,12 @@
+#news {
+    max-width: 100%;
+}
+#news p {
+  margin: 10px 0;
+}
+
+iframe {
+  width: 100%;
+  height: 40vw;
+  margin: 20px 0;
+}

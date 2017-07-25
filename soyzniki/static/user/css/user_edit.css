@@ -1,0 +1,49 @@
+#user_edit{
+    margin-right: 10px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#left_box {
+  flex-basis: 48%;
+  margin-right: 2%;
+}
+#right_box {
+  flex-basis: 48%;
+  margin-left: 2%;
+}
+#bottom_box {
+  flex-basis: 100%;
+}
+
+form ul {
+  width: 280px;
+  margin:auto;
+}
+
+form ul li input {
+  width: 100%;
+}
+
+@media all and (max-width: 900px) {
+
+
+  #user_edit {
+    margin-right: 0;
+  }
+}
+
+@media all and (max-width: 659px) {
+  #left_box {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+  #right_box {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+}

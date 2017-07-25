@@ -1,0 +1,23 @@
+#login {
+  margin-right: 10px;
+}
+
+#login form {
+  display: block;
+  text-align: center;
+}
+
+#new_user {
+  text-align: center;
+  margin-right: 10px;
+}
+
+@media all and (max-width: 900px) {
+
+  #login {
+    margin-right: 0;
+  }
+  #new_user {
+    margin-right: 0;
+  }
+}

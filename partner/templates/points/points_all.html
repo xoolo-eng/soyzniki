@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load main_tags %}
+{% block title %}
+<title>Союзники Почки партнера</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/points_all.css' %}">
+{% endblock style %}
+{% block partner %}
+<div id="points">
+    <div class="header">
+        <h3>Объекты организации</h3>
+    </div>
+    <div id="add">
+        {% if filter %}
+        <a class="big_button" href="/partner/{{ partner.unp_unn }}/points/all/1/">Показать все</a>
+        {% endif %}
+        <a class="big_button" href="/partner/{{ partner.unp_unn }}/point/add/">Добавить объект</a>
+        {% if points %}
+    </div>
+    <div id="all_points">
+        <ul>
+            {% for point in points %}
+            <li {% if not point.active %}class="hide_point"{% endif %}>
+                <div class="header">
+                    <h3>{{ point.name|truncatechars:20 }}</h3>
+                </div>
+                <p>широта - {{ point.lon }}, долгота - {{ point.lat }}</p>
+
+                <div class="filter">
+                    <a class="red_button" href="/partner/{{ partner.unp_unn }}/points/servis/{{ point.servis.name_en|to_link }}/1/">{{ point.servis }}</a>
+                    <a class="red_button" href="/partner/{{ partner.unp_unn }}/points/country/{{ point.country.name_en|to_link }}/1/">{{ point.country }}</a>
+                    <a class="red_button" href="/partner/{{ partner.unp_unn }}/points/region/{{ point.region.name_en|to_link }}/1/">{{ point.region }}</a>
+                </div>
+                <div class="service">
+                    <a class="big_button" href="/view/point/{{ point.id }}/">Просмотр</a>
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/point/{{ point.id }}/edit/">Редактировать</a>
+                    {% if point.active %}
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/point/{{ point.id }}/hide/">Скрыть</a>
+                    {% else %}
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/point/{{ point.id }}/visible/">Показать</a>
+                    {% endif %}
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/point/{{ point.id }}/delete/">Удалить</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if pages.1 %}
+    <div id="pages">
+        <ul>
+            {% for page in pages %}
+            {{ page|safe }}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock partner %}

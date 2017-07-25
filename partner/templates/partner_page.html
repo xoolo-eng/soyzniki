@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники {{ partner.name }}</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/partner_page.css'%}">
+{% endblock style %}
+{% block partner %}
+<div id="partner">    
+    <div class="header">
+        <h3>{{ partner.name }}</h3>
+    </div>
+    <div id="partner_page">
+        {% if partner_admin %}
+        <div id="partner_items">
+            <img src="{% static 'partner/images/users.png'%}">
+            <div id="items">
+                <ul>
+                    <li><a class="big_button" href="/partner/{{ partner.unp_unn }}/edit/">Редатировать данные</a></li>
+                    <li><a class="big_button" href="/partner/{{ partner.unp_unn }}/points/all/1/">Объекты организации</a></li>
+                    <li><a class="big_button" href="/partner/{{ partner.unp_unn }}/admin/">Администрирование</a></li>
+                    <li><a class="big_button" href="/partner/{{ partner.unp_unn }}/delete/">Удалить партнера</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="partner_info">
+            <div id="items_button">
+                <img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+            </div>
+            <ul>
+                <li><p><span>УНП/УНН: </span>{{ partner.unp_unn }}</p></li>
+                <li><p><span>E-mail: </span>{{ partner.email }}</p></li>
+                <li><p><span>Номер телефона: </span>{{ partner.thelephones }}</p></li>
+                <li><p><span> Контактное лицо: </span>{{ partner.contact_person }}</p></li>
+                <li><p><span>Страна: </span>{{ partner.country }}</p></li>
+                <li><p><span>Область: </span>{{ partner.region }}</p></li>
+                <li><p><span>Район: </span>{{ partner.district }}</p></li>
+                <li><p><span>Населенный пункт: </span>{{ partner.city }}</p></li>
+                <li><p><span>Адрес: </span>{{ partner.street }}</p></li>
+            </ul>
+        </div>
+        {% else %}
+        <div id="partner_items">
+            <img src="{% static 'partner/images/users.png'%}">
+            <div id="items">
+
+            </div>
+        </div>
+        <div id="partner_info">
+            <div id="items_button">
+                <img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+            </div>
+            <p>Данная страница дочтупна только для администратора</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock partner %}
+{% block script %}
+<script src="{% static 'partner/js/partner.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Редактирование данных партнера</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/partner_edit.css'%}">
+{% endblock style %}
+{% block partner %}
+<div id="edit_partner">
+    <div class="header">
+        <h3>Редактирование</h3>
+    </div>
+    <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+        {{ form_partner.country_id }}
+        {{ form_partner.region_id }}
+        {{ form_partner.district_id }}
+        {{ form_partner.city_id }}
+        {% if form_partner.non_field_errors %}
+        <div class="input_error">{{ form_partner.non_field_errors }}</div>
+        {% endif %}
+        <div id="left_box">
+            <ul>
+                <li class="input">
+                    {% if form_partner.contact_person.errors %}
+                    <div class="input_error">
+                        {{ form_partner.contact_person.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.contact_person.label }}</label>
+                    {{ form_partner.contact_person }}
+                </li>
+                <li class="input">
+                    {% if form_partner.thelephones.errors %}
+                    <div class="input_error">
+                        {{ form_partner.thelephones.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.thelephones.label }}</label>
+                    {{ form_partner.thelephones }}
+                </li>
+                <li class="input">
+                    {% if form_partner.email.errors %}
+                    <div class="input_error">
+                        {{ form_partner.email.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.email.label }}</label>
+                    {{ form_partner.email }}
+                </li>
+                <li class="input">
+                    {% if form_partner.street.errors %}
+                    <div class="input_error">
+                        {{ form_partner.street.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.street.label }}</label>
+                    {{ form_partner.street }}
+                </li>
+            </ul>
+        </div>
+        <div id="right_box">
+            <ul>
+                <li class="input">
+                    {% if form_partner.country.errors %}
+                    <div class="input_error">
+                        {{ form_partner.country.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.country.label }}</label>
+                    {{ form_partner.country }}
+                </li>
+                <li class="input">
+                    {% if form_partner.region.errors %}
+                    <div class="input_error">
+                        {{ form_partner.region.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.region.label }}</label>
+                    {{ form_partner.region }}
+                </li>
+                <li class="input">
+                    {% if form_partner.district.errors %}
+                    <div class="input_error">
+                        {{ form_partner.district.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.district.label }}</label>
+                    {{ form_partner.district }}
+                </li>
+                <li class="input">
+                    {% if form_partner.city.errors %}
+                    <div class="input_error">
+                        {{ form_partner.city.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="">{{ form_partner.city.label }}</label>
+                    {{ form_partner.city }}
+                </li>
+            </ul>
+        </div>
+        <div id="bottom_box">
+            <ul>
+                <li>
+                    <input class="big_button" type="submit" name="submit" value="Сохранить">
+                </li>
+                <li>
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/">Отмена</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+{% endblock partner %}
+{% block script %}
+<script src="{% static 'soyzniki/js/custom_input.min.js'%}"></script>
+{% endblock script %}

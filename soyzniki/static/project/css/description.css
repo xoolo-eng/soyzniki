@@ -1,0 +1,21 @@
+#description {
+    margin-right: 10px;
+}
+
+#description img {
+    float: none;
+}
+
+#description #book {
+    float: left;
+    width: 200px;
+}
+
+#description #mobile {
+    float: right;
+    height: 200px;
+}
+
+p {
+    margin: 10px 0;
+}

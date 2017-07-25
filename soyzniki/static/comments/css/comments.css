@@ -1,0 +1,43 @@
+#comments_page {
+    border-bottom: 1px solid #13445E;
+}
+
+#form form ul li{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#form form ul li label{
+    flex-basis: 30%;
+}
+
+#form form ul li textarea {
+    flex-basis: 70%;
+}
+
+
+.one_comment {
+    border-top: 1px solid #13445E;
+    margin: 20px 0;
+}
+
+@media all and (max-width: 900px) {
+    #form form ul li label{
+        flex-basis: 100%;
+    }
+
+    #form form ul li textarea {
+        flex-basis: 100%;
+    }
+
+    #form form ul li{
+        justify-content: center;
+    }
+}
+
+@media all and (max-width: 432px) {
+    #form {
+        display: none;
+    }
+
+}

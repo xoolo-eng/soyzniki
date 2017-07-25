@@ -1,0 +1,155 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Информация о местных компаниях, заправках, рабочих станцях технического обслуживания - СТО, о кафе и закусочных, уютных отелях или гостиницах, посмотреть подробные карты России, Беларуси, Украины, Казахстана. Получить указания и построить маршрут для проезда на автомобиле и общественном транспорте с помощью сервиса 'СОЮЗНИКИ'" />
+  <meta name="keywords" content="карта, дорожная карта, автомобильная карта, карта дорог, карта автомобильных дорог, работа +на карте, проезд, карта проезда, карта заправок, заправки лукойл, заправка авто, заправка газом, заправки москвы, адреса заправок, заправка бензин, заправки газпром, заправки газпромнефть, заправки роснефть, заправка пропаном, заправка масла, сто, станция технического обслуживания, станции обслуживания автомобилей, станция технического обслуживания автомобилей, техническое обслуживание, ремонт +и техническое обслуживание, техническое обслуживание автомобиля, схема проезда москва, схема проезда ул,карта схема проезда, дорога, дорого, дороги, дорога онлайн, м4 платная, автомобильная карта россии, автомобильная россия, платные участки м4, отель, гостиница, придорожный, придорожное кафе, придорожные гостиницы, кафе, кафе минска, закусочная, закусочный, россия, карта россии, карт россии, карта россии +с городами, карта россии +с городами подробная, карта дорог россии, беларусь, карта беларуси, карта дорог беларуси, карта автомобильных дорог, платные дороги +в беларуси, платные дороги +в россии" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  {% block title %}
+  <title>Союзники Нам попути</title>
+  {% endblock title %}
+  <link rel="shortcut icon" href="{% static 'soyzniki/images/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'soyzniki/css/base.css'%}">
+  <link rel="stylesheet" href="{% static 'soyzniki/css/load_animate.css'%}">
+  {% block style %}
+  {% endblock style %}
+  {% csrf_token %}
+</head>
+<body>
+  {% if messages %}
+  <div id="message_block">
+    <ul>
+      {% for message in messages %}
+      <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <section id="page">
+    <section id="mobile_panel">
+      <a class="block" id="logo_mobile" href="/">
+        <img src="{% static 'soyzniki/images/logo.mobile.svg' %}" alt="soyzniki logo mobile" />
+      </a>
+      <div id="slogon_mobile">
+        <img src="{% static 'soyzniki/images/slogon.mobile.svg' %}" alt="soyzniki logo mobile" />
+      </div>
+      <div id="meny_mobile">
+        <div id="nav_button">
+          <img src="{% static 'soyzniki/images/mobile.meny.svg' %}" alt="" />
+        </div>
+      </div>
+    </section>
+    <section id="header">
+      {% block top_bar %}
+      {% if login %}
+      <section id="top_bar">
+        <div id="positon">
+          <img src="{% static 'soyzniki/images/position.svg' %}" alt=""/> 
+          <a class="light_text" href="/map/{{ user.country.name_en }}/{{ user.city.name_en }}/">{{ user.city }}</a>
+        </div>
+        <div id="name">
+          <img src="{% static 'soyzniki/images/user_name.svg'%}" alt=""/>
+          <a class="light_text" href="/user/{{ user.login }}/">{{ user.name }}</a>
+        </div>
+        <div id="exit">
+          <img src="{% static 'soyzniki/images/exit.svg'%}" alt=""/>
+          <a class="light_text" href="/user/{{ user.login }}/logout/">Выход</a>
+        </div>
+      </section>
+      {% endif %}
+      {% endblock top_bar %}
+      {% block navigation %}
+      <section id="nav">
+        <div id="logo">
+          <a class="block" href="/">
+            <img src="{% static 'soyzniki/images/logo.svg'%}" alt=""/>
+          </a>
+        </div>
+        <div id="navigation">
+          <ul>
+            <li><a class="{{ home_class }}" href="/" >Главная</a></li>
+            <li><a class="{{ news_class }}" href="/news/1/" >Новости</a></li>
+            <li><a class="{{ forum_class }} deburg" href="/">Форум</a></li> 
+            <li><a class="{{ contacts_class }}" href="/project/contacts/">Контакты</a></li>
+            <li><a class="{{ about_us_class }}" href="/project/description/">О проекте</a></li>
+            <li>{% if not login %}<a href="/user/login/" >Вход</a>{% else %}<a class="{{ account_class }}" href="/partner/all/" >Кабинет</a>{% endif %}</li>
+          </ul>
+        </div>
+      </section>
+      {% endblock navigation %}
+    </section>
+    <section id="content">
+      {% block home %}
+      {% endblock home %}
+      {% block news %}
+      {% endblock news %}
+      {% block user %}
+      {% endblock user %}
+      {% block partner %}
+      {% endblock partner %}
+      {% block map %}
+      {% endblock map %}
+      {% block agreement %}
+      {% endblock agreement %}
+      {% block description %}
+      {% endblock description %}
+      {% block contacts %}
+      {% endblock contacts %}
+      {% block reclama %}
+      <div id="reclama">
+        <div class="header">
+          <h3>Реклама</h3>
+        </div>
+        <img id="image_top" src="{% static 'soyzniki/images/first.jpg'%}" alt="viptextransgroup">
+        <img id="image_bottom" src="{% static 'soyzniki/images/second.jpg'%}" alt="viptextransgroup">
+      </div>
+      {% endblock reclama %}
+    </section>
+    {% block footer %}
+    <section id="footer">
+      <h3 id="footer_head" class="light_text">Наши контакты:</h3>
+      <div id="ofice">
+        <h3 class="light_text">Работа с клиентами:</h3>
+        <p class="light_text">+375 (33) 666-61-96</p>
+        <a class="light_text" href="mailto:office@soyzniki.ru">office@soyzniki.ru</a>
+      </div>
+      <div id="work">
+        <h3 class="light_text">Маркетинг и сотрудничество:</h3>
+        <p class="light_text">+375 (29) 692-87-82</p>
+        <p class="light_text">+375 (44) 777-79-67</p>
+        <p class="light_text">+375 (25) 777-79-67</p>
+        <a class="light_text" href="mailto:marketing@soyzniki.ru">marketing@soyzniki.ru</a>
+      </div>
+      <div id="program">
+        <h3 class="light_text">Разработка и поддержка сайта:</h3>
+        <p class="light_text">+375 (44) 708-30-19</p>
+        <p class="light_text">+375 (25) 509-66-85</p>
+        <a class="light_text" href="mailto:support@soyzniki.ru">support@soyzniki.ru</a>
+      </div>
+      <div id="mail">
+        <h3 class="light_text">Адрес:</h3>
+        <p class="light_text">Беларусь, г. Гомель,<br/>ул. Федосеенко 8, 3 этаж</p>
+      </div>
+      <div id="social">
+        <img src="{% static 'soyzniki/images/ok.svg' %}" alt=""/>
+        <img src="{% static 'soyzniki/images/facebook.svg' %}" alt=""/>
+        <img src="{% static 'soyzniki/images/twitter.svg' %}" alt=""/>
+        <img src="{% static 'soyzniki/images/skype.svg' %}" alt=""/>
+      </div>
+      <div id="licenze">
+        <p class="light_text">©2017 Soyzniki</p>
+      </div>
+    </section>
+    {% endblock footer %}
+  </section>
+</body>
+<script src="{% static 'soyzniki/js/jquery.min.js' %}"></script>
+<script src="{% static 'soyzniki/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'soyzniki/js/close_message.min.js' %}"></script>
+<script src="{% static 'soyzniki/js/mobile.js' %}"></script>
+<script src="{% static 'soyzniki/js/load_animate.js' %}"></script>
+{% block script %}
+{% endblock script %}
+</html>

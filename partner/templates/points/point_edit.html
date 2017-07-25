@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Редактирование данных точки</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'soyzniki/css/leaflet.css' %}">
+<link rel="stylesheet" href="{% static 'partner/css/point_add.css' %}">
+<script type="text/javascript">var ACTIV_COUNTRY = '{{ partner.country.id }}';</script>
+{% endblock style %}
+{% block partner %}
+<div id="point">
+    <div class="header">
+        <h3>Редактирование объекта</h3>
+    </div>
+    <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+        {{ form_edit_point.country_id }}
+        {{ form_edit_point.region_id }}
+        {{ form_edit_point.district_id }}
+        {{ form_edit_point.city_id }}
+        {% if form_partner.non_field_errors %}
+        <div class="input_error">{{ form_partner.non_field_errors }}</div>
+        {% endif %}
+        <div id="time_box">
+            <ul>
+                <li class="input" id="time_work">
+                    {% if form_edit_point.time_work.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.time_work.errors }}
+                    </div>
+                    {% endif %}
+                    {{ form_edit_point.time_work }}
+                </li>
+            </ul>
+        </div>
+        <div id="desc_box">
+            <ul>
+                <li class="input">
+                    {% if form_edit_point.name.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.name.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_name">{{ form_edit_point.name.label }}</label>
+                    {{ form_edit_point.name }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.url.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.url.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_url">{{ form_edit_point.url.label }}</label>
+                    {{ form_edit_point.url }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.servis.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.servis.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_servis">{{ form_edit_point.servis.label }}</label>
+                    {{ form_edit_point.servis }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.transport.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.transport.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_transport">{{ form_edit_point.transport.label }}</label>
+                    {{ form_edit_point.transport }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.thelephones.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.thelephones.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_thelephones">{{ form_edit_point.thelephones.label }}</label>
+                    {{ form_edit_point.thelephones }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.desc.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.desc.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_desc">{{ form_edit_point.desc.label }}</label>
+                    {{ form_edit_point.desc }}
+                </li>
+            </ul>
+        </div>
+        <div id="address_box">
+            <ul>
+                <li class="input">
+                    {% if form_edit_point.country.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.country.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="country">{{ form_edit_point.country.label }}</label>
+                    {{ form_edit_point.country }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.region.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.region.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="region">{{ form_edit_point.region.label }}</label>
+                    {{ form_edit_point.region }}
+                </li>  
+                <li class="input">
+                    {% if form_edit_point.district.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.district.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="district">{{ form_edit_point.district.label }}</label>
+                    {{ form_edit_point.district }}
+                </li>          
+                <li class="input">
+                    {% if form_edit_point.city.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.city.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="city">{{ form_edit_point.city.label }}</label>
+                    {{ form_edit_point.city }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.street.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.street.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_street">{{ form_edit_point.street.label }}</label>
+                    {{ form_edit_point.street }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.lat.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.lat.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_lat">{{ form_edit_point.lat.label }}</label>
+                    {{ form_edit_point.lat }}
+                </li>
+                <li class="input">
+                    {% if form_edit_point.lon.errors %}
+                    <div class="errors">
+                        {{ form_edit_point.lon.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="id_lon">{{ form_edit_point.lon.label }}</label>
+                    {{ form_edit_point.lon }}
+                </li>
+            </ul>
+            <div id="map"></div>
+        </div>
+        <div id="bottom_box">
+            <ul>
+                <li>
+                    <input class="big_button" type="submit" name="add_point" value="Сохранить">
+                </li>
+                <li>
+                    {% if back %}
+                    <a class="big_button" href="{{ back }}">Отмена</a>
+                    {% else %}
+                    <a class="big_button" href="/partner/{{ partner.unp_unn }}/points/all/1/">Отмена</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+{% endblock partner %}
+{% block script %}
+<script src="{% static 'soyzniki/js/custom_input.min.js'%}"></script>
+<script src="{% static 'soyzniki/js/close_message.js'%}"></script>
+<script src="{% static 'soyzniki/js/leaflet-src.js'%}"></script>
+<script src="{% static 'partner/js/custom_work_input.js'%}"></script>
+<script src="{% static 'partner/js/add_point.js'%}"></script>
+{% endblock script %}

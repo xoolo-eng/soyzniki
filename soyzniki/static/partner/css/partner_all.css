@@ -1,0 +1,22 @@
+
+
+#partner {
+  margin-right: 10px;
+}
+
+.partner p {
+  display: flex;
+}
+
+.partner img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+@media all and (max-width: 900px) {
+  #partner {
+    margin-right: 0px;
+  }
+}

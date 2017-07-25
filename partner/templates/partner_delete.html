@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Удаление страницы партнера</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/partner_delete.css'%}">
+{% endblock style %}
+{% block partner %}
+<div id="partner_delete">
+<div class="header">
+    <h3>Удалить организацию</h3>
+</div>
+    <form action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+        {{ form_del_partner.user_id }}
+        {% if form_partner.non_field_errors %}
+        <div class="input_error">{{ form_partner.non_field_errors }}</div>
+        {% endif %}
+        <ul>
+            <li class="input">
+                {% if form_del_partner.password.errors %}
+                <div class="input_error">
+                    {{ form_del_partner.password.errors }}
+                </div>
+                {% endif %}
+                <label for="password">{{ form_del_partner.password.label }}</label>
+                {{ form_del_partner.password }}
+            </li>
+            <li>
+                <input class="big_button" type="submit" name="submit" value="Удалить">
+            </li>
+            <li>
+                <a class="big_button" href="/partner/{{ partner.unp_unn }}/">Отмена</a>
+            </li>
+        </ul>
+    </form>
+</div>
+{% endblock partner %}

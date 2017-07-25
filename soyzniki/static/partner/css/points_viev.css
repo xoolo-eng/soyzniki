@@ -1,0 +1,46 @@
+
+#view_point {
+  margin-right: 10px
+}
+
+#view_point #point_info > div {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #13445E;
+}
+
+#work_time {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#work_time h3 {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+#work_time .working_day {
+  flex-basis: 23%;
+  margin: 5px 1%;
+  text-align: center;
+}
+
+@media all and (max-width: 900px) {
+
+
+  #view_point {
+    margin-right: 0
+  }
+
+  #work_time .working_day {
+    flex-basis: 31%;
+    margin: 5px 1%;
+    text-align: center;
+  }
+}
+@media all and (max-width: 620px) {
+  #work_time .working_day {
+    flex-basis: 48%;
+    margin: 5px 1%;
+    text-align: center;
+  }
+}

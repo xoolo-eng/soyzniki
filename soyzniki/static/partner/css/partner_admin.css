@@ -1,0 +1,165 @@
+
+#add_admin {
+  margin-right: 10px;
+}
+
+#admins {
+
+}
+
+#search_admin {
+
+}
+
+#form_user_add {
+
+}
+
+#admins ul{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -5px;
+}
+
+#admins ul li {
+  flex-basis: calc(50% - 10px);
+  margin:5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#admins ul li a.big_button {
+  flex-basis: 220px;
+  height: 36px;
+  display: flex;
+  padding: 3px;
+  margin: 10px 10px 10px 0;
+}
+
+#admins ul li a.block {
+  flex-basis: 36px;
+  text-align: center;
+  border: 1px solid #13445E;
+  color: #13445E;
+  height: 36px;
+  display: block;
+  padding: 3px;
+  margin: 10px 0;
+  background: #cecece;
+  background: -moz-linear-gradient(top, #cecece 0%, #b9b9b9 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #cecece), color-stop(100%, #b9b9b9));
+  background: -webkit-linear-gradient(top, #cecece 0%, #b9b9b9 100%);
+  background: -o-linear-gradient(top, #cecece 0%, #b9b9b9 100%);
+  background: -ms-linear-gradient(top, #cecece 0%, #b9b9b9 100%);
+  background: linear-gradient(to bottom, #cecece 0%, #b9b9b9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cecece', endColorstr='#13445e', GradientType=0 );
+}
+
+#admins ul li a:first-child img{
+  margin-right: 10px;
+}
+
+#admins ul li > p {
+  flex-basis: 100%;
+  /*border-bottom: 1px solid #13445E; */
+}
+
+#form_login_search {
+  text-align: center
+}
+
+#form_data_search {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: center;
+}
+
+#left_box {
+  flex-basis: 48%;
+  margin-right: 2%;
+}
+#right_box {
+  flex-basis: 48%;
+  margin-left: 2%;
+}
+#bottom_box {
+  flex-basis: 100%;
+}
+
+
+#form_data_search ul {
+  width: 280px;
+  margin: auto;
+}
+
+#form_data_search ul li input {
+  width: 100%;
+}
+
+#form_user_add {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+#form_user_add .header {
+  flex-basis: 100%;
+}
+
+#form_user_add .find_user_info {
+  flex-basis: calc(50% - 10px);
+  margin: 10px 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#form_user_add .find_user_info .big_button {
+  margin: 0;
+  display: flex;
+  margin-right: 10px
+}
+
+#form_user_add .find_user_info input {
+  /*width: 30px;*/
+}
+
+#form_user_add .find_user_info p {
+  flex-basis: 100%;
+  /*border-bottom: 1px solid #13445E; */
+}
+
+#form_user_add .find_user_info img {
+  height: 30px;
+  width: 30px;
+  max-height: none;
+  margin: 3px;
+}
+
+#form_user_add #add {
+  flex-basis: 100%;
+}
+
+
+@media all and (max-width: 900px) {
+
+  #add_admin {
+    margin-right: 0;
+  }
+}
+
+@media all and (max-width: 620px) {
+
+  #form_data_search {
+
+  }
+
+  #form_user_add {
+    /*justify-content: center;*/
+    display: block;
+  }
+
+  /*#form_user_add .find_user_info {
+    flex-basis: 100%;
+  }*/
+}

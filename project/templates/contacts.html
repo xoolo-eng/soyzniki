@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Контакты</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'project/css/contacts.css' %}">
+<link rel="stylesheet" href="{% static 'soyzniki/css/leaflet.css' %}">
+{% endblock style %}
+{% block contacts %}
+<div id="contact">
+    <div class="header">
+        <h2>Контакты</h2>
+    </div>
+    <div id="info">
+        <div class="contact_block">
+            <h3>Работа с клиентами:</h3>
+            <p>+375 (33) 666-61-96</p>
+            <a href="mailto:office@soyzniki.ru">office@soyzniki.ru</a>
+        </div>
+        <div class="contact_block">
+            <h3>Маркетинг и сотрудничество:</h3>
+            <p>+375 (29) 692-87-82</p>
+            <p>+375 (44) 777-79-67</p>
+            <p>+375 (25) 777-79-67</p>
+            <a href="mailto:marketing@soyzniki.ru">marketing@soyzniki.ru</a>
+        </div>
+        <div class="contact_block">
+            <h3>Разработка и поддержка сайта:</h3>
+            <p>+375 (44) 708-30-19</p>
+            <p>+375 (25) 509-66-85</p>
+            <a href="mailto:support@soyzniki.ru">support@soyzniki.ru</a>
+        </div>
+        <div class="contact_block">
+            <h3>Адрес:</h3>
+            <p>Беларусь, г. Гомель,<br/>ул. Федосеенко 8, 3 этаж</p>
+        </div>
+    </div>
+    <div id="form">
+    <div class="header">
+        <h3>Обратная связь</h3>
+    </div>
+        <form action method="POST" autocomplete="off">
+            {% csrf_token %}
+            {% if feedback_form.non_field_errors %}
+            <div class="input_error">{{ feedback_form.non_field_errors }}</div>
+            {% endif %}
+            <ul>
+                <li class="input">
+                    {% if feedback_form.name.errors %}
+                    <div class="input_error">
+                        {{ feedback_form.name.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="name">{{ feedback_form.name.label }}</label>
+                    {{ feedback_form.name }}
+                </li>
+                <li class="input">
+                    {% if feedback_form.contact.errors %}
+                    <div class="input_error">
+                        {{ feedback_form.contact.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="contact">{{ feedback_form.contact.label }}</label>
+                    {{ feedback_form.contact }}
+                </li>
+                <li class="input">
+                    {% if feedback_form.message.errors %}
+                    <div class="input_error">
+                        {{ feedback_form.message.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="message">{{ feedback_form.message.label }}</label>
+                    {{ feedback_form.message }}
+                </li>
+                <li>
+                    <input class="big_button" type="submit" name="submit" value="Отправить" />
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div id="map"></div>
+</div>
+{% endblock contacts %}
+{% block script %}
+<script src="{% static 'soyzniki/js/leaflet-src.js'%}"></script>
+<script src="{% static 'project/js/project.js' %}"></script>
+{% endblock script %}

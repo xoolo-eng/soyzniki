@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники {{ country.name_ru }}</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'soyzniki/css/leaflet.css' %}">
+<link rel="stylesheet" href="{% static 'soyzniki/css/MarkerCluster.Default.css' %}">
+<link rel="stylesheet" href="{% static 'soyzniki/css/MarkerCluster.css' %}">
+<link rel="stylesheet" href="{% static 'map/css/map.css'%}">
+<script type="text/javascript">var ACTIV_COUNTRY = '{{ country.name_en }}';</script>
+{% endblock style %}
+{% block reclama %}{% endblock reclama %}
+{% block map %}
+<div id="map_page">
+    <div id="map" class="map"></div>
+    <div id="open_button" class="close">
+        <img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+    </div>
+    <div id="leftBar" class="close">
+        <div id="logo_2">
+            <a href="/">
+                <img src="{% static 'soyzniki/images/logo.min.svg'%}" alt=""/>
+            </a>
+        </div>
+        <div id="icons">
+            <ul>
+                {% for servis in services %}
+                <li id="{{ servis.name_en }}" {{ active }}>                
+                    <img src="/media/{{ servis.icon }}">
+                    <p>{{servis.name_ru|upper}}</p>
+                    <div class="mask">{% comment %}
+                        <a href="/map/{{ country.name_en }}/{{ servis.name_en }}/"></a>{% endcomment %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id="right_bar">
+        <ul>
+            <li class="right_icon" id="passenger_transport" title="легковой транспорт">
+                <img src="{% static 'map/images/passenger_transport.svg' %}" alt="passenger_transport">
+            </li>
+            <li class="right_icon" id="freight_transport" title="грузовой транспорт">
+                <img src="{% static 'map/images/freight_transport.svg' %}" alt="freight_transport">
+            </li>
+            <li class="right_icon" id="position" title="мое местоположение">
+                <img src="{% static 'map/images/position.svg' %}" alt="position">
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock map %}
+{% block footer %}{% endblock footer %}
+{% block script %}
+<script src="{% static 'soyzniki/js/leaflet-src.js'%}"></script>
+<script src="{% static 'soyzniki/js/jquery.min.js'%}"></script>
+<script src="{% static 'soyzniki/js/markersCluster.js'%}"></script>
+<script src="{% static 'soyzniki/js/jquery.cookie.js'%}"></script>
+<script src="{% static 'soyzniki/js/device.min.js'%}"></script>
+<script src="{% static 'map/js/map.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Список организаций</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'partner/css/partner_all.css'%}">
+{% endblock style %}
+{% block partner %}
+<div id="partner">
+    <div class="header">
+        <h3>Организации</h3>
+    </div>
+    {% if partners %}
+    {% for partner in partners %}
+    <a class="block" href="/partner/{{ partner.unp_unn }}/">
+        <div class="partner big_button">
+            <p><img src="/static/user/images/user.png">{{ partner.name }}</p>
+        </div>
+    </a>
+    {% endfor %}
+    <a class="big_button" href="/partner/add/">Добавить организацию</a>
+
+    {% else %}
+    <a class="big_button" href="/partner/add/">Добавить партнера</a>
+    {% endif %}
+</div>
+{% endblock partner %}

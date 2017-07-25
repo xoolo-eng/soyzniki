@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load staticfiles main_tags %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'home/css/home.css'%}">
+<script type="text/javascript">var ACTIV_COUNTRY = '{{ position.country.name_en }}';</script>
+{% endblock style %}
+{% block reclama %}
+{% endblock reclama %}
+{% block home %}
+<div id="home">
+  <section id="map" class="">
+    <div id="country_list">
+      <ul>
+        {% for country in countries %}
+        <li id="{{ country.name_en }}">
+          <a class="" href="/map/{{country.name_en|to_link }}/" >{{ country.name_ru }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div id="country_img">
+      <ul>
+        {% for country in countries %}
+        <li title="{{ country.name_en }}">
+          <a class="block" href="/map/{{country.name_en|to_link }}/" >
+            <img src="/media/{{ country.border }}" alt="{{ country.name_ru }}"  />
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div id="country_button">
+        <img src="{% static 'home/images/country.meny.svg' %}" alt="" />
+      </div>
+    </div>
+  </section>
+  <section id="midle">
+    <div id="news">
+      <div class="header">
+        <h3>Новости</h3>
+      </div>
+      <div id="news_image">
+        <a class="block" href="/news/{{ news.link }}/">
+          <img src="/media/{{ news.image.all.0.prev_image }}" src="{{ news.image.all.0.name }}" />
+        </a>
+        <a class="red_button" href="/news/rubric/{{ news.rubric.name_en|lower }}/1/">{{ news.rubric|truncatechars:15 }}</a>
+      </div>
+      <div id="news_content">
+        <a class="block" href="/news/{{ news.link }}/">
+          <h2>{{ news.title|truncatechars:25 }}</h2>
+          <p>{{ news.content|truncatechars:200 }}</p>
+        </a>
+        <p><a clas="base_link" href="/news/country/{{ news.country.name_en|to_link }}/1/">{{ news.country|truncatechars:15 }}</a> - {{ news.date_pub|date:"d.m.Y" }}</p>
+        {% if news.source %}
+        <p>Новость предоставлена <a clas="base_link" href="{{ news.link_source }}">{{ news.source }}</a></p>
+        {% endif %}
+      </div>
+    </div>
+    <div id="weather">
+      <div class="header">
+        <h3>Погода</h3>
+      </div>
+      <div id="weather_content">
+        <table>
+          <tr>
+            <td class="head_row" id="date_weahter" colspan="4">{{ position.city }}<br/>{{ position.country.name_ru }}</td>
+          </tr>
+          <tr>
+            {% for time in weather %}
+            <td class="time_weather">{{time.dt|get_time}}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"><p>Температура</p></td>
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td class="temperature">{{ line.main.temp }} <sup>0</sup>C</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"></td>
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"><p>Облачность</p></td>
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td><img style="max-height: none" class="weather_img" src="https://openweathermap.org/img/w/{{ line.weather.0.icon }}.png" alt="-"></td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td class="cloud_cover">{{ line.clouds.all }}%</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"><p>Влажность</p></td>
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td class="humidity">{{ line.main.humidity }}%</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"><p>Направление ветра</p></td>
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td><img src="{% static 'soyzniki/images/direction.svg' %}" alt="bg"><img style="transform: rotate({{ line.wind.deg }}deg)" class="background" src="{% static 'soyzniki/images/arrow.svg' %}"></td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="head_row" colspan="4"><p>Скорость ветра</p></td>
+          </tr>
+          <tr>
+            {% for line in weather %}
+            <td class="wind_speed">{{ line.wind.speed }} <sub>м/с</sub></td>
+            {% endfor %}
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="video">
+      <div class="header">
+        <h3>YouTube</h3>
+      </div>
+      <div class="player-wrapper" id="youtube-player-block"></div>
+      <a class="red_button" href="https://youtube.com" target="_blank">YouTube</a>
+    </div>
+  </section>
+</div>
+{% endblock home %}
+{% block script %}
+<script src="{% static 'home/js/slider.js' %}"></script>
+<script src="{% static 'home/js/youtube.js' %}"></script>
+{% endblock script %}

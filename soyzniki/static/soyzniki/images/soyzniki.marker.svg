@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40.810371mm"
+   height="47.624447mm"
+   viewBox="0 0 144.60367 168.74804"
+   id="svg4616"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logistics_mark.svg"
+   inkscape:export-filename="/home/hacker/Изображения/mHundred.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4618" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="-59.572118"
+     inkscape:cy="134.97756"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="false"
+     inkscape:snap-smooth-nodes="false"
+     inkscape:snap-midpoints="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="true" />
+  <metadata
+     id="metadata4621">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-276.47771,-91.161799)">
+    <rect
+       style="fill:#e2000d;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="rect4167"
+       width="117.82443"
+       height="115.9203"
+       x="289.87042"
+       y="104.32368"
+       ry="8.0231533" />
+    <path
+       style="fill:#e2000d;fill-opacity:1;stroke:none;stroke-width:1.156479;stroke-opacity:1"
+       d="m 280.83122,91.161799 -4.35352,4.345706 0,133.777375 4.35157,4.35937 8.53711,0 6.74804,-8.9043 -6.24609,0 -4.35352,-4.36132 0,-115.96878 4.40039,-4.34375 100.6602,0 6.74804,-8.904301 -116.49222,0 z m 127.36136,0 -6.74804,8.904301 6.10742,-0.138665 4.49023,4.484375 0,115.834 -4.24609,4.25196 -100.82034,0 -6.75,8.90429 34.89844,0.0703 13.99024,26.4375 14.02344,-26.38086 53.58986,0.10742 4.34766,-4.34766 0.006,-133.781275 -4.35757,-4.345686 -8.53125,0 z"
+       id="rect4136"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff"
+       d="m 307.95715,157.38389 c 0,-24.69473 19.08386,-45.00291 46.28302,-45.00291 16.74643,0 26.21018,6.17366 34.3268,14.13443 l -11.60732,13.15976 c -6.79373,-6.01124 -12.76987,-9.74793 -22.89041,-9.74793 -14.92004,0 -25.7071,12.18488 -25.7071,27.29421 0,14.94677 10.61437,27.29409 25.7071,27.29409 10.12054,0 16.42266,-3.89913 23.38818,-10.23524 l 12.44343,12.99717 c -9.12718,9.58546 -19.23892,14.78438 -36.49239,14.78438 -26.04278,0.32535 -45.45131,-19.33336 -45.45131,-44.67796 z"
+       id="path42"
+       sodipodi:nodetypes="ssccssscccs" />
+  </g>
+</svg>

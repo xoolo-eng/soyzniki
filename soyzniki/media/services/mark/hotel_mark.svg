@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40.810371mm"
+   height="47.624447mm"
+   viewBox="0 0 144.60367 168.74804"
+   id="svg4616"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="hotel.svg"
+   inkscape:export-filename="/home/hacker/Изображения/mHundred.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4618" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="30.980769"
+     inkscape:cy="54.081975"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="false"
+     inkscape:snap-smooth-nodes="false"
+     inkscape:snap-midpoints="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="710"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="true">
+    <sodipodi:guide
+       position="46.200284,29.292788"
+       orientation="1,0"
+       id="guide5187" />
+    <sodipodi:guide
+       position="38.343125,29.292788"
+       orientation="1,0"
+       id="guide5189" />
+    <sodipodi:guide
+       position="53.700273,29.292788"
+       orientation="1,0"
+       id="guide5191" />
+    <sodipodi:guide
+       position="53.700273,29.292788"
+       orientation="0,1"
+       id="guide5193" />
+    <sodipodi:guide
+       position="38.343125,14.292809"
+       orientation="0,1"
+       id="guide5195" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4621">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-276.65687,-88.978403)">
+    <rect
+       style="fill:#13445e;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="rect4167"
+       width="117.82443"
+       height="115.9203"
+       x="290.04959"
+       y="102.14028"
+       ry="8.0231533" />
+    <path
+       style="fill:#e2000d;fill-opacity:1;stroke:none;stroke-width:1.156479;stroke-opacity:1"
+       d="m 281.01038,88.978403 -4.35352,4.345706 0,133.777371 4.35157,4.35937 8.53711,0 6.74804,-8.9043 -6.24609,0 -4.35352,-4.36132 0,-115.96877 4.40039,-4.343751 100.6602,0 6.74804,-8.904306 -116.49222,0 z m 127.36136,0 -6.74804,8.904306 6.10742,-0.13867 4.49023,4.484381 0,115.83399 -4.24609,4.25196 -100.82034,0 -6.75,8.90429 34.89844,0.0703 13.99024,26.4375 14.02344,-26.38086 53.58986,0.10742 4.34766,-4.34766 0.006,-133.781271 -4.35757,-4.345686 -8.53125,0 z"
+       id="rect4136"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g331"
+       transform="matrix(1.4965418,0,0,1.7684136,-23.602285,-28.50088)"
+       style="fill:#ffffff;fill-opacity:1">
+      <path
+         d="m 277.8,96.6 0,12.6 -57.5,0 0,-19.2 c 0,-1.8 -1.5,-3.4 -3.4,-3.4 l 0,0 c -1.8,0 -3.4,1.6 -3.4,3.4 l 0,36.7 6.7,0 0,-11.4 57.5,0 0,11.3 6.7,0 0,-30 c 0,-1.8 -1.5,-3.4 -3.4,-3.4 l 0,0 c -1.7,-0.1 -3.2,1.5 -3.2,3.4 z"
+         id="path333"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;fill-opacity:1" />
+      <path
+         d="m 239.9,107.5 -17.6,0 0,-3 c 0,-0.9 0.7,-1.7 1.7,-1.7 l 14.3,0 c 0.9,0 1.7,0.7 1.7,1.7 l 0,3 z"
+         id="path335"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

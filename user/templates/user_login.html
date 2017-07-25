@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Союзники Вход</title>
+{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'user/css/user_login.css'%}">
+{% endblock style %}
+{% block user %}
+<div id="login">
+	<div class="header">
+		<h3>Вход</h3>
+	</div>
+	<form action="" method="POST" autocomplete="off">
+		{% csrf_token %}
+		{% if form.non_field_errors %}
+		<div class="form_error">{{ form.non_field_errors }}</div>
+		{% endif %}
+		<ul>
+			
+			<li class="input">
+				{% if form.user.errors %}
+				<div class="input_error">{{ form.user.errors }}</div>
+				{% endif %}
+				<label for="user">{{ form.user.label }}</label>
+				{{ form.user }}
+				
+			</li>
+			<li class="input">
+				{% if form.password.errors %}
+				<div class="input_error">{{ form.password.errors }}</div>
+				{% endif %}
+				<label for="password">{{ form.password.label }}</label>
+				{{ form.password }}
+				
+			</li>
+			<li class="input">
+				{% if form.saved.errors %}
+				<div class="input_error">{{ form.saved.errors }}</div>
+				{% endif %}
+				<label for="saved">{{ form.saved }} {{ form.saved.label }}</label>
+				
+			</li>
+			<li>
+				<input class="big_button" type="submit" value="Войти">
+			</li>
+		</ul>
+	</form>
+	<div id="new_user">
+		<p>Нет учетной записи?</p>
+		<div class="registr">
+			<a class="big_button" href="/user/add/">Регистрация</a>
+		</div>
+	</div>
+</div>
+{% endblock user %}

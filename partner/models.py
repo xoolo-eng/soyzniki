@@ -17,6 +17,9 @@ class Tariff(models.Model):
     def __str__(self):
         return '{0}'.format(self.name)
 
+    id = models.BigAutoField(
+        primary_key=True
+    )
     name = models.CharField(
         max_length=20,
         verbose_name='Название тарифного плана'
@@ -45,6 +48,9 @@ class Partner(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    id = models.BigAutoField(
+        primary_key=True
+    )
     user = models.ManyToManyField(
         User,
         related_name='users',
@@ -109,6 +115,9 @@ class Point(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    id = models.BigAutoField(
+        primary_key=True
+    )
     partner = models.ForeignKey(
         Partner,
         related_name='partner_related',

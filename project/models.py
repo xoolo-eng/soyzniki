@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Feedback(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     name = models.TextField(
         verbose_name='Имя'
     )

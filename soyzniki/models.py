@@ -13,6 +13,9 @@ class Country(models.Model):
         name = 'countries/{0}.{1}'.format(''.join(rand_name), type_file)
         return name
 
+    id = models.BigAutoField(
+        primary_key=True
+    )
     name_en = models.CharField(
         unique=True,
         max_length=100,
@@ -57,6 +60,9 @@ class Country(models.Model):
 
 
 class Region(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     country = models.ForeignKey(
         Country,
         related_name='region_counrty',
@@ -92,6 +98,9 @@ class Region(models.Model):
 
 
 class District(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     region = models.ForeignKey(
         Region,
         related_name='district_region',
@@ -127,6 +136,9 @@ class District(models.Model):
 
 
 class City(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     district = models.ForeignKey(
         District,
         related_name='country_district',
@@ -171,6 +183,9 @@ class City(models.Model):
 
 
 class Timezone(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     name_timezone = models.CharField(
         max_length=23,
         verbose_name='Название временной зоны'
@@ -196,6 +211,9 @@ class Timezone(models.Model):
 
 
 class IP(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     country = models.ForeignKey(
         Country,
         related_name='ip_country',

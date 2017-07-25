@@ -4,6 +4,9 @@ from datetime import datetime
 
 
 class Comments(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     applications = models.CharField(
         max_length=50,
         verbose_name='Приложение'

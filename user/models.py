@@ -7,6 +7,9 @@ from soyzniki.main.send_email import send_email
 
 
 class User(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     login = models.CharField(
         max_length=255,
         verbose_name='Логин / Login'
@@ -115,6 +118,9 @@ class User(models.Model):
 
 
 class Secret(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     user_id = models.IntegerField(
         verbose_name='id зарегестрированного пользователя'
     )

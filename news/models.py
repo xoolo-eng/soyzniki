@@ -30,6 +30,9 @@ class Images(models.Model):
         )
         return name
 
+    id = models.BigAutoField(
+        primary_key=True
+    )
     full_image = models.ImageField(
         upload_to=path_upload,
         verbose_name='Изображение'
@@ -100,7 +103,6 @@ class Images(models.Model):
 
     class Meta:
         db_table = 'news_images'
-        ordering = ['-priority', '-id']
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
 
@@ -149,6 +151,9 @@ class Images(models.Model):
 
 
 class Rubric(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     name_ru = models.CharField(
         max_length=50,
         verbose_name='название рубрики'
@@ -172,6 +177,9 @@ class Rubric(models.Model):
 
 
 class News(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
     country = models.ForeignKey(
         Country,
         related_name='news_rubric',

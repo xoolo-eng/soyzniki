@@ -10,8 +10,7 @@ var my_point;
 var end_position;
 var map = L.map('map');
 var country = ACTIV_COUNTRY;
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-// L.tileLayer('/map/tiles/{s}/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 $(document).ready(function(){
 	var csrftoken = $.cookie('csrftoken');
 	function csrfSafeMethod(method) {
@@ -25,6 +24,10 @@ $(document).ready(function(){
 		}
 	});
 	initialize();
+	// if($('html').hasClass('mobile')) {
+	// 	$("body").animate({"scrollTop":40},"slow");
+	// 	console.log($("body").scrollTop());
+	// }
 });
 $(window).resize(function() {
 
@@ -33,7 +36,8 @@ $(window).resize(function() {
 $(window).unload(function(){
 	var map_cookie = {
 		center: map.getCenter(),
-		zoom: map.getZoom()
+		zoom: map.getZoom(),
+		scroll: $('#icons').scrollTop()
 	}
 	var cookie_name = `map_${country}`;
 	$.cookie(cookie_name, JSON.stringify(map_cookie),
@@ -41,11 +45,10 @@ $(window).unload(function(){
 		expires: 30,
 		path: '/map/'
 	});
-	// if($('html').hasClass('mobile')) {
-	// 	$("body").animate({"scrollTop":40},"slow");
-	// 	console.log($("body").scrollTop());
-	// }
 });
+// $('#icons').scroll(function() {
+// 	console.log($('#icons').scrollTop());
+// });
 function initialize(){
 	var map_cookie;
 	var cookie_name = `map_${country}`;
@@ -53,6 +56,7 @@ function initialize(){
 	{
 		map_cookie = JSON.parse($.cookie(cookie_name));
 		map.setView(map_cookie.center, map_cookie.zoom);
+		$('#icons').scrollTop(map_cookie.scroll);
 	}
 	else
 	{

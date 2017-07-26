@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'soyzniki.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'soyzniki_new',
+        'NAME': 'soyzniki',
         'USER': 'root',
         'PASSWORD': 'LbvfbDbnz2Xfirb',
         'HOST': 'localhost',

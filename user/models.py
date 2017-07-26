@@ -98,7 +98,7 @@ class User(models.Model):
             пароль: {0}
 
             Для завершения регистрации перейдите по ссылке
-            https://soyzniki.ru/user/{1}/actvate/{2}/'''.format(
+            https://soyzniki.ru/user/{1}/activate/{2}/'''.format(
                 passwd,
                 self.login,
                 hash_user_pass(

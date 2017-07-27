@@ -4,10 +4,7 @@ from user.models import User, Secret
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('login', 'email')
-
-
-# class SecertAdmin(admin.ModelAdmin):
-#     list_display = ('user_id)',)
+    exclude = ['city']
 
 
 admin.site.register(User, UserAdmin)

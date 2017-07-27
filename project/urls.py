@@ -5,4 +5,5 @@ urlpatterns = [
     url(r'^agreement/', views.agreement),
     url(r'^description/', views.description),
     url(r'^contacts/', views.contacts),
+    url(r'^get_test_cookie/', views.get_test_cookie),
 ]

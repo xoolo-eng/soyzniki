@@ -1,5 +1,5 @@
-from soyzniki.models import Country, Region, Timezone, IP
-from soyzniki.main.auth import is_login, user_id
+from soyzniki.models import Country, Region
+from soyzniki.main.auth import is_login, user_id, get_country_by_ip
 from django.template.context_processors import csrf
 from django.shortcuts import render
 from django.core.cache import cache
@@ -11,45 +11,6 @@ from threading import Thread
 from random import randint
 import json
 import time
-
-
-def get_country_by_ip(ip_address):
-
-    try:
-        ip = IP.objects.get(
-            start_ip__lte=ip_address,
-            end_ip__gte=ip_address
-        )
-    except IP.DoesNotExist:
-        geo_data = json.loads(
-            urlopen('http://ip-api.com/json/{}'.format(ip_address))
-            .read()
-            .decode('utf-8')
-        )
-        data_ip = urlopen(
-            'http://ipgeobase.ru:7020/geo?ip={}'.format(ip_address)
-        ).read()
-        xml = BeautifulSoup(data_ip)
-        inetnum_tag = xml.find('inetnum')
-        inetnum_data = inetnum_tag.string.split(' - ')
-        country = Country.objects.get(double_code=geo_data['countryCode'])
-        timezone = Timezone.objects.get(name_timezone=geo_data['timezone'])
-        new_ip = IP()
-        new_ip.country = country
-        new_ip.timezone = timezone
-        new_ip.start_ip = inetnum_data[0]
-        new_ip.end_ip = inetnum_data[1]
-        new_ip.save()
-        data_to_positon = {
-            'country': country,
-            'time_zone': timezone,
-        }
-    else:
-        data_to_positon = {
-            'country': ip.country,
-            'time_zone': ip.timezone,
-        }
-    return data_to_positon
 
 
 def get_weather(weather_data):

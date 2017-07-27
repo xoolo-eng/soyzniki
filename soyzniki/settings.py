@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'soyzniki.context.user_token.bad_redirect',
             ],
         },
     },
@@ -141,3 +142,20 @@ USE_TZ = False
 MEDIA_ROOT = os.path.join(BASE_DIR, 'soyzniki/media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
+
+# Список поисковых систем
+ROBOTS_LIST = [
+    "Googlebot",
+    "Slurp",
+    "MSNBot",
+    "Teoma",
+    "Scooter",
+    "ia_archiver",
+    "Lycos",
+    "Yandex",
+    "StackRambler",
+    "Mail.Ru",
+    "Aport",
+    "WebAlta",
+    "Crawler/2.0"
+]

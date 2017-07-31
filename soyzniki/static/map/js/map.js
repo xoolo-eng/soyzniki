@@ -24,39 +24,49 @@ $(document).ready(function(){
 		}
 	});
 	initialize();
-	// if($('html').hasClass('mobile')) {
-	// 	$("body").animate({"scrollTop":40},"slow");
-	// 	console.log($("body").scrollTop());
-	// }
 });
 $(window).resize(function() {
 
 });
 
 $(window).unload(function(){
+	var active = $('#icons li.active').get(0);
+	var active_point;
+	if (active !== undefined) {
+		active_point = $(active).attr('id');
+	}
+	else {
+		active_point = ''
+	}
 	var map_cookie = {
 		center: map.getCenter(),
 		zoom: map.getZoom(),
-		scroll: $('#icons').scrollTop()
+		scroll: $('#icons').scrollTop(),
+		activate: active_point
 	}
 	var cookie_name = `map_${country}`;
 	$.cookie(cookie_name, JSON.stringify(map_cookie),
 	{
-		expires: 30,
+		expires: 10,
 		path: '/map/'
 	});
 });
-// $('#icons').scroll(function() {
-// 	console.log($('#icons').scrollTop());
-// });
 function initialize(){
 	var map_cookie;
 	var cookie_name = `map_${country}`;
-	if($.cookie(cookie_name) != null)
+	if($.cookie(cookie_name) !== null)
 	{
 		map_cookie = JSON.parse($.cookie(cookie_name));
 		map.setView(map_cookie.center, map_cookie.zoom);
 		$('#icons').scrollTop(map_cookie.scroll);
+		if (map_cookie.activate !== '') {
+			var icon = $('#' + map_cookie.activate).get(0);
+			if (icon !== undefined) {
+				// $(icon).addClass('active');
+				// get_point(servis, country);
+			}
+		}
+		
 	}
 	else
 	{
@@ -71,14 +81,7 @@ function initialize(){
 			map.setView(data['lat_lng'], 8)
 		});
 	}
-	var url_page = location.pathname;
-	var url_data = url_page.split('/');
-	var servis = url_data[url_data.length - 2];
-	var icon = document.getElementById(servis);
-	if (icon !== null) {
-		icon.className = 'active';
-		get_point(servis, country);
-	}
+
 }
 icons.onclick = function(event){
 	var active = this.getElementsByClassName('active')[0]
@@ -177,29 +180,32 @@ $('#position').click(function(){
 		map.removeLayer(my_point);
 	}
 	else{
-		start_animate();
 		var my_marker;
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(function(position) {
 				my_marker=L.icon({iconUrl:"/static/map/images/position.svg",iconSize:[46,46],iconAnchor:[23,23],popupAnchor:[0,-23]});
 				map.setView([position.coords.latitude, position.coords.longitude]);
 				my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: my_marker}).addTo(map);
-				set_my_pos(position, my_marker);
-				interval = setInterval(function(){
-					set_my_pos(position, my_marker);
-				}, 10000);
 			});
+			interval = setInterval(function() {
+				set_my_pos(my_marker);
+			}, 5000);
 			$(this).addClass('icon_action');
-			stop_animate();	
 		}
 		else {
 			alert('Ваш браузер не поодерживает получение текущего местополжения')
 		}
 	}
 });
+function set_my_pos(marker){
+	navigator.geolocation.getCurrentPosition(function(position) {
+		map.removeLayer(my_point);
+		map.setView([position.coords.latitude, position.coords.longitude]);
+		my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: marker}).addTo(map);
+	});
+}
 map.on('popupopen', function(event){
 	var content = event.popup._content;
-	// var address_block = $(content).children('.info_point').children('.address_point')[0];
 	var id_point = content.id;
 	$.ajax({
 		url: `/map/get_address`,
@@ -217,29 +223,21 @@ map.on('popupopen', function(event){
 			address_point['street'];
 		}
 		$('.address_point').html(address);
-
-		/*
-		 если все дни выходные
-		 */
-		 var working_time = $('.working_time').get();
-		 var flag = false;
-		 for(i=0; i<working_time.length; i++){
-		 	if(working_time[i].innerHTML != 'Выходной'){
-		 		flag = true;
-		 		break;
-		 	}
-		 }
-		 if (!flag){
-		 	for(i=0; i<working_time.length; i++){
-		 		working_time[i].innerHTML = 'Нет данных'
-		 	}
-		 }
-		});
+		var working_time = $('.working_time').get();
+		var flag = false;
+		for(i=0; i<working_time.length; i++){
+			if(working_time[i].innerHTML != 'Выходной'){
+				flag = true;
+				break;
+			}
+		}
+		if (!flag){
+			for(i=0; i<working_time.length; i++){
+				working_time[i].innerHTML = 'Нет данных'
+			}
+		}
+	});
 });
-
-function set_my_pos(position, marker){
-	my_point([position.coords.latitude, position.coords.longitude]);
-}
 function get_point(servis, country){
 	start_animate();
 	$.ajax({
@@ -251,8 +249,8 @@ function get_point(servis, country){
 		}
 	}).done(function(data){
 		points = JSON.parse(data);
-		add_points(points);
 		stop_animate();
+		add_points(points);
 	});
 }
 function add_points(points){
@@ -261,10 +259,8 @@ function add_points(points){
 		var id = document.createElement('p');
 		var lon = document.createElement('p');
 		var lat = document.createElement('p');
-		// var desc = document.createElement('p');
 		var link = document.createElement('a');
 		var name = document.createElement('h2');
-		// var phone = document.createElement('p');
 		var info = document.createElement('div');
 		var address = document.createElement('p');
 		var transport = document.createElement('p');
@@ -276,10 +272,8 @@ function add_points(points){
 		lon.className = 'lon_point';
 		lat.className = 'lat_point';
 		link.innerHTML = 'Подробнее';
-		// desc.className = 'desc_point';
 		link.className = 'link_point';
 		name.className = 'name_point';
-		// phone.className = 'phone_point';
 		info.className = 'info_point';
 		address.className = 'address_point';
 		transport.className = 'transport_point';
@@ -288,17 +282,10 @@ function add_points(points){
 		desc_point.className = 'desc_point_point';
 		all_desc_point.className = 'all_desc_point';
 		link.href = '/view/point/'+points[i]['id']+'/';
-		// $(link).attr({target: '_blank'});
 		id.innerHTML = points[i]['id'];
 		lat.innerHTML = points[i]['lat'];
 		lon.innerHTML = points[i]['lon'];
 		name.innerHTML = points[i]['name'];
-		// if (points[i]['deck'] !== undefined){
-		// 	desc.innerHTML = points[i]['deck'];
-		// }
-		// if (points[i]['thelephones'] !== undefined){
-		// 	phone.innerHTML = 'Телефоны: ' + points[i]['thelephones'];
-		// }
 		if (points[i]['transport'] == 1) {
 			transport.innerHTML = 'Все виды транспорта'
 		}
@@ -313,8 +300,6 @@ function add_points(points){
 		info.appendChild(name);
 		info.appendChild(id);
 		info.appendChild(time_work);
-		// all_desc_point.appendChild(desc);
-		// all_desc_point.appendChild(phone);
 		all_desc_point.appendChild(lat);
 		all_desc_point.appendChild(lon);
 		all_desc_point.appendChild(transport)
@@ -415,6 +400,3 @@ $('#open_button').click(function() {
 
 	}
 });
-// $('#leftBar #icons').scroll(function() {
-// 	console.log($(this).scrollTop());
-// });

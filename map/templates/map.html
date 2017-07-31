@@ -26,7 +26,7 @@
         <div id="icons">
             <ul>
                 {% for servis in services %}
-                <li id="{{ servis.name_en }}" {{ active }}>                
+                <li id="{{ servis.name_en }}">                
                     <img src="/media/{{ servis.icon }}">
                     <p>{{servis.name_ru|upper}}</p>
                     <div class="mask">{% comment %}

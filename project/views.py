@@ -72,7 +72,15 @@ def get_test_cookie(request):
                 visitor.id,
                 visitor.second_id
             ),
-            max_age = 60 * 60 * 24 * 365,
+            max_age=60 * 60 * 24 * 365,
             path='/'
         )
         return response
+    else:
+        return HttpResponseRedirect('/project/cookies/')
+
+
+def cookies(request):
+    if request.COOKIES.get('csrftoken') or request.COOKIES.get('sessionid'):
+        return HttpResponseRedirect('/')
+    return render(request, 'cookies.html', {})

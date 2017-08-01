@@ -10,7 +10,7 @@ var my_point;
 var end_position;
 var map = L.map('map');
 var country = ACTIV_COUNTRY;
-L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 $(document).ready(function(){
 	var csrftoken = $.cookie('csrftoken');
 	function csrfSafeMethod(method) {
@@ -47,14 +47,16 @@ $(window).unload(function(){
 	var cookie_name = `map_${country}`;
 	$.cookie(cookie_name, JSON.stringify(map_cookie),
 	{
-		expires: 10,
 		path: '/map/'
 	});
 });
 function initialize(){
+	if ($.cookie('saveresult') === undefined) {
+		localStorage.clear();
+	}
 	var map_cookie;
 	var cookie_name = `map_${country}`;
-	if($.cookie(cookie_name) !== null)
+	if($.cookie(cookie_name) !== undefined)
 	{
 		map_cookie = JSON.parse($.cookie(cookie_name));
 		map.setView(map_cookie.center, map_cookie.zoom);
@@ -62,8 +64,8 @@ function initialize(){
 		if (map_cookie.activate !== '') {
 			var icon = $('#' + map_cookie.activate).get(0);
 			if (icon !== undefined) {
-				// $(icon).addClass('active');
-				// get_point(servis, country);
+				$(icon).addClass('active');
+				get_point(map_cookie.activate, country);
 			}
 		}
 		
@@ -240,20 +242,39 @@ map.on('popupopen', function(event){
 });
 function get_point(servis, country){
 	start_animate();
-	$.ajax({
-		url: '/map/find_point',
-		type: 'POST',
-		data: {
-			country: country,
-			servis: servis
-		}
-	}).done(function(data){
-		points = JSON.parse(data);
+	if(localStorage[`${servis}_point`] !== undefined){
+		var points = JSON.parse(localStorage[`${servis}_point`]);
 		stop_animate();
 		add_points(points);
-	});
+	}
+	else {
+		$.ajax({
+			url: '/map/find_point',
+			type: 'POST',
+			data: {
+				country: country,
+				servis: servis
+			}
+		}).done(function(data){
+			try {
+				localStorage[`${servis}_point`] = data;
+			} catch (e) {
+				if (e == QUOTA_EXCEEDED_ERR) {
+					alert('Превышен лимит');
+				}
+			}
+			
+			// localStorage[`${servis}_point`] = data;
+			var points = JSON.parse(localStorage[`${servis}_point`]);
+			stop_animate();
+			add_points(points);
+		});
+	}
 }
 function add_points(points){
+	if ($.cookie('saveresult') === undefined) {
+		$.cookie('saveresult', 1, {path: '/map/'});
+	}
 	var elements = new Array();
 	for (i=0; i<points.length; i++) {
 		var id = document.createElement('p');

@@ -25,7 +25,7 @@ $(window).ready(function(){
     });
 });
 $(document).ready(function(){
-    L.tileLayer('http://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     if ((latitude.value.length == 0) || (longitude.value.length == 0)){
         get_position('country', ACTIV_COUNTRY);
     }

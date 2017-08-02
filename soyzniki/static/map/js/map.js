@@ -8,7 +8,7 @@ var clasters = {
 var marker;
 var my_point;
 var end_position;
-var map = L.map('map');
+var map = L.map('map', {minZoom: 3});
 var country = ACTIV_COUNTRY;
 L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 $(document).ready(function(){
@@ -68,6 +68,16 @@ function initialize(){
 				get_point(map_cookie.activate, country);
 			}
 		}
+		else {
+			var url = window.location.pathname;
+			var url_list = url.split('/').slice(0, -1);
+			var type_servis = url_list[url_list.length - 1]
+			var servic = $('#' + type_servis).get(0);
+			if (servic !== undefined) {
+				$(servic).addClass('active');
+				get_point(map_cookie.activate, country);
+			}
+		}
 		
 	}
 	else
@@ -89,11 +99,14 @@ icons.onclick = function(event){
 	var active = this.getElementsByClassName('active')[0]
 	var icon = event.target.parentElement;
 	var url_page;
+	var url_list;
+	var url = window.location.pathname;
 	if(active === undefined)
 	{
 		icon.className = 'active';
 		servis = icon.id;
-		url_page = `/map/${country}/${servis}/`;
+		url_page = `${url}${servis}/`;
+		console.log(url_page);
 		history.pushState('', '', url_page);
 		get_point(servis, country)
 	}
@@ -103,18 +116,23 @@ icons.onclick = function(event){
 		{
 			icon.className = '';
 			remove_point()
-			url_page = `/map/${country}/`;
+			url_list = url.split('/').slice(0, -2)
+			url_page = url_list.join('/') + '/';
+			console.log(url_page);
 			history.pushState('', '', url_page);
 		}
 		else
 		{
 			active.className = '';
 			remove_point()
-			url_page = `/map/${country}/`;
+			url_list = url.split('/').slice(0, -2)
+			url_page = url_list.join('/') + '/';
+			console.log(url_page);
 			history.pushState('', '', url_page);
 			icon.className = 'active';
 			servis = icon.id;
-			url_page = `/map/${country}/${servis}/`;
+			url_page = `${url_page}${servis}/`;
+			console.log(url_page)
 			history.pushState('', '', url_page);
 			get_point(servis, country)
 		}
@@ -210,32 +228,43 @@ map.on('popupopen', function(event){
 	var content = event.popup._content;
 	var id_point = content.id;
 	$.ajax({
-		url: `/map/get_address`,
+		url: `/map/get_info`,
 		type: 'POST',
 		data: {
 			id_point: id_point
 		}
 	}).done(function(data){
-		var address_point = JSON.parse(data);
-		var address = address_point['region'] + ', ' +
-		address_point['district'] + ', ' +
-		address_point['city'];
-		if (address_point['street'] != 'Нет информации'){
+		var point_data = JSON.parse(data);
+		$('.name_point').html(point_data['name']);
+		$('.time_work_point').html(point_data['time_work']);
+		if (point_data['transport'] == 1) {
+			$('.transport_point').html('Все виды транспорта')
+		}
+		if (point_data['transport'] == 2) {
+			$('.transport_point').html('Только легковой транспорт')
+		}
+		if (point_data['transport'] == 3) {
+			$('.transport_point').html('Только грузовой транспорт')
+		}
+		var address = point_data['region'] + ', ' +
+		point_data['district'] + ', ' +
+		point_data['city'];
+		if (point_data['street'] != 'Нет информации'){
 			address = address + ', ' +
-			address_point['street'];
+			point_data['street'];
 		}
 		$('.address_point').html(address);
 		var working_time = $('.working_time').get();
 		var flag = false;
 		for(i=0; i<working_time.length; i++){
-			if(working_time[i].innerHTML != 'Выходной'){
+			if($(working_time[i]).html() != 'Выходной'){
 				flag = true;
 				break;
 			}
 		}
 		if (!flag){
 			for(i=0; i<working_time.length; i++){
-				working_time[i].innerHTML = 'Нет данных'
+				$(working_time[i]).html('Нет данных');
 			}
 		}
 	});
@@ -245,7 +274,7 @@ function get_point(servis, country){
 	if(localStorage[`${servis}_point`] !== undefined){
 		var points = JSON.parse(localStorage[`${servis}_point`]);
 		stop_animate();
-		add_points(points);
+		add_points(points['points'], points['marker']);
 	}
 	else {
 		$.ajax({
@@ -260,24 +289,24 @@ function get_point(servis, country){
 				localStorage[`${servis}_point`] = data;
 			} catch (e) {
 				if (e == QUOTA_EXCEEDED_ERR) {
-					alert('Превышен лимит');
+					localStorage.clear();
 				}
 			}
-			
-			// localStorage[`${servis}_point`] = data;
+			localStorage.clear();
+			localStorage[`${servis}_point`] = data;
 			var points = JSON.parse(localStorage[`${servis}_point`]);
 			stop_animate();
-			add_points(points);
+			add_points(points['points'], points['marker']);
 		});
 	}
 }
-function add_points(points){
+function add_points(points, marker){
 	if ($.cookie('saveresult') === undefined) {
 		$.cookie('saveresult', 1, {path: '/map/'});
 	}
 	var elements = new Array();
 	for (i=0; i<points.length; i++) {
-		var id = document.createElement('p');
+		// var id = document.createElement('p');
 		var lon = document.createElement('p');
 		var lat = document.createElement('p');
 		var link = document.createElement('a');
@@ -289,11 +318,11 @@ function add_points(points){
 		var time_work = document.createElement('div');
 		var desc_point = document.createElement('div');
 		var all_desc_point = document.createElement('div');
-		id.className = 'id_point';
+		// id.className = 'id_point';
 		lon.className = 'lon_point';
 		lat.className = 'lat_point';
 		link.innerHTML = 'Подробнее';
-		link.className = 'link_point';
+		link.className = 'link_point big_button';
 		name.className = 'name_point';
 		info.className = 'info_point';
 		address.className = 'address_point';
@@ -303,75 +332,62 @@ function add_points(points){
 		desc_point.className = 'desc_point_point';
 		all_desc_point.className = 'all_desc_point';
 		link.href = '/view/point/'+points[i]['id']+'/';
-		id.innerHTML = points[i]['id'];
-		lat.innerHTML = points[i]['lat'];
-		lon.innerHTML = points[i]['lon'];
-		name.innerHTML = points[i]['name'];
-		if (points[i]['transport'] == 1) {
-			transport.innerHTML = 'Все виды транспорта'
-		}
-		if (points[i]['transport'] == 2) {
-			transport.innerHTML = 'Только легковой транспорт'
-		}
-		if (points[i]['transport'] == 3) {
-			transport.innerHTML = 'Только грузовой транспорт'
-		}
+		// id.innerHTML = points[i]['id'];
+		lat.innerHTML = 'Широта: ' + points[i]['lat'];
+		lon.innerHTML = 'Долгота: ' + points[i]['lon'];
 		desc_point.id = points[i]['id'];
-		time_work.innerHTML = points[i]['time_work'];
 		info.appendChild(name);
-		info.appendChild(id);
+		// info.appendChild(id);
 		info.appendChild(time_work);
 		all_desc_point.appendChild(lat);
 		all_desc_point.appendChild(lon);
 		all_desc_point.appendChild(transport)
 		all_desc_point.appendChild(address);
 		info.appendChild(all_desc_point);
-		if (points[i]['url'] !== ''){
-			info.appendChild(link);
-		}
+		info.appendChild(link);
 		desc_point.appendChild(info);
 		desc_point.appendChild(reclama);
 		elements[i] = {
 			'data': desc_point,
 			'lat': points[i]['lat'],
 			'lon': points[i]['lon'],
-			'marker': points[i]['marker'],
-			'transport': points[i]['transport']
 		};
 	}
-	add_claster(elements);
+	add_claster(elements, marker);
+
 	var popup = $('.leaflet-popup-pane').get(0);
 	popup.onclick = function(event){
 		var element = event.target;
-		if (element.parentElement.className == 'working_day')
-		{
-			if(element.className == '')
-			{
-				var elements = $('.working_day h2').get();
-				for(i=0; i<elements.length; i++){
-					elements[i].className = '';
-					elements[i].nextElementSibling.classList.remove('visible');
-				}
-				element.className = 'vis';
-				element.nextElementSibling.className = 'visible';
+		if ($(element).parent().hasClass('working_day')) {
+			if ($(element).hasClass('vis')) {
+				$(element).removeClass('vis');
+				$(element).siblings('.working_wripper').removeClass('visible');
 			}
-			else
-			{
-				element.className = '';
-				element.nextElementSibling.classList.remove('visible');
-			}
-		}
-		else{
-			var elements = $('.working_day h2').get();
-			for(i=0; i<elements.length; i++){
-				elements[i].className = '';
-				elements[i].nextElementSibling.classList.remove('visible');
+			else {
+				$('h3.vis').removeClass('vis');
+				$('div.working_wripper').removeClass('visible');
+				$(element).addClass('vis');
+				$(element).siblings('.working_wripper').addClass('visible')
 			}
 		}
 	}
 }
-function add_claster(elements)
+function add_claster(elements, marker_icon)
 {
+	clasters.all_transport = new L.markerClusterGroup();
+	var icon = L.icon({
+		iconUrl: '/media/' + marker_icon,
+		iconSize: [46, 46],
+		iconAnchor: [23, 23],
+		popupAnchor: [0, -23],
+	});
+	marker = new Array();
+	for(i=0;i<elements.length;i++) {
+		marker[i] = L.marker([+elements[i]['lat'], +elements[i]['lon']], {icon: icon}).addTo(clasters.all_transport);
+		marker[i].openPopup().bindPopup(elements[i]['data'], {closeButton: false, minWidth: 300, maxWidth: 300});
+	}
+	clasters.all_transport.addTo(map);
+/*
 	clasters.all_transport = new L.markerClusterGroup();
 	clasters.passenger_transport = new L.markerClusterGroup();
 	clasters.freight_transport = new L.markerClusterGroup();
@@ -379,7 +395,7 @@ function add_claster(elements)
 	for(i=0;i<elements.length;i++)
 	{
 		var icon = L.icon({
-			iconUrl: '/media/' + elements[i]['marker'],
+			iconUrl: '/media/' + icon,
 			iconSize: [46, 46],
 			iconAnchor: [23, 23],
 			popupAnchor: [0, -23],
@@ -398,12 +414,14 @@ function add_claster(elements)
 	clasters.all_transport.addTo(map);
 	clasters.passenger_transport.addTo(map);
 	clasters.freight_transport.addTo(map);
-}
+*/}
 function remove_point()
 {
 	map.removeLayer(clasters.all_transport);
+	/*
+	map.removeLayer(clasters.all_transport);
 	map.removeLayer(clasters.passenger_transport);
-	map.removeLayer(clasters.freight_transport);
+	map.removeLayer(clasters.freight_transport);*/
 }
 
 $('#open_button').click(function() {

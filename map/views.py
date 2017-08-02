@@ -44,43 +44,45 @@ def find_point(request):
         country_id = country.id
         servis_id = servis.id
         marker = servis.mark
-        all_points = Point.objects.filter(
+        query_points = Point.objects.filter(
             country_id=country_id,
             servis_id=servis_id,
             active=True
         )
-        points = []
-        for point in all_points:
-            point.time_work_in_html()
-            points.append({
-                'id': point.id,
-                'name': point.name,
-                'lat': point.lat,
-                'lon': point.lon,
-                'time_work': point.time_work,
-                'url': point.url,
-                'marker': str(marker),
-                'transport': point.transport,
-                # 'thelephones': point.thelephones,
-            })
+        all_points = []
+        for point in query_points:
+            all_points.append(
+                {
+                    'id': point.id,
+                    'lat': point.lat,
+                    'lon': point.lon
+                }
+            )
+        points = {
+            'marker': str(marker),
+            'points': all_points
+        }
         return HttpResponse(json.dumps(points))
 
 
-def get_address(request):
+def get_info(request):
     if request.method == 'POST' and request.is_ajax():
         id_point = request.POST.get('id_point')
         try:
             point = Point.objects.get(id=int(id_point))
+            point.time_work_in_html()
         except Point.DoesNotExist:
             data = {}
         else:
             data = {
+                'name': point.name,
+                'transport': point.transport,
+                'time_work': point.time_work,
                 'region': point.region.name_ru,
                 'district': point.district.name_ru,
                 'city': point.city.name_ru,
                 'street': point.street
             }
-        print(id_point)
         return HttpResponse(json.dumps(data))
 
 

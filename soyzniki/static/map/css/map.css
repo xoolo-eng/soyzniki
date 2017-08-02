@@ -309,65 +309,71 @@ body {
 
 
 .desc_piont{
-min-width: 320px;
+    min-width: 320px;
 
 }
 .info_point{
 }
 .info_point .name_point{
-text-align: center;
+    text-align: center;
 }
 .info_point .address_point{
-text-align: center;
+    /*text-align: center;*/
 }
 .info_point .time_work_point{
-width: 100%;
-height: 50px;
-display: flex;
+    width: 100%;
+    height: 50px;
+    display: flex;
 }
 
 .info_point .time_work_point .working_day {
-width: 14.28%;
-position: static;
+    width: 14.28%;
+    position: static;
 }
-.info_point .time_work_point .working_day h2 {
-text-align: center;
-line-height: 40px;
-border: 1px solid #ffffff;
+.info_point .time_work_point .working_day h3 {
+    text-align: center;
+    line-height: 40px;
+    border-radius: 6px;
+    border: 1px solid #13445E;
+    background: #cecece;
+    background: linear-gradient(to bottom, rgba(206, 206, 206, 0) 0%, rgb(185, 185, 185) 100%);
 }
-.info_point .time_work_point .working_day h2.vis {
-color: #00a2ff;
-background: #ffffff;
+.info_point .time_work_point .working_day h3.vis {
+    background: #ffffff;
 }
 .info_point .time_work_point .working_day div{
-display: none;
+    display: none;
 }
 .info_point .time_work_point .working_day div.visible{
-display: block;
-position: absolute;
-min-height: 100px;
-top: 40px;
-left: 0;
-background: #ffffff;
-color: #00a2ff;
-width: 100%;
-padding: 10px;
-z-index: 100;
+    display: block;
+    position: absolute;
+    min-height: 128px;
+    box-shadow: 0 0 1px 1px #13445E;
+    /*border-radius: 6px;*/
+    top: 55px;
+    left: 0;
+    background: #ffffff;
+    width: 100%;
+    padding: 10px;
+    /*border: 1px solid #13445E;*/
+    z-index: 100;
+
 }
 
 .info_point .all_desc_point {
-border: 1px solid #ffffff;
-margin: 5px 0;
-min-height: 90px;
-text-align: center;
+    border: 1px solid #13445E;
+    margin: 5px 0;
+    min-height: 90px;
+    padding: 3px;
+    /*text-align: center;*/
 }
 
 .info_point .link_point {
-display: block;
-margin-top: 5px;
-border: 1px solid #ffffff;
-width: 100%;
-line-height: 20px;
-text-align: center;
-color: #ffffff;
+    /*display: block;*/
+    /*margin-top: 5px;*/
+    /*border: 1px solid #ffffff;*/
+    /*width: 100%;*/
+    /*line-height: 20px;*/
+    /*text-align: center;*/
+    /*color: #ffffff;*/
 }

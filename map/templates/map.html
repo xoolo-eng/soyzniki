@@ -39,6 +39,21 @@
     </div>
     <div id="right_bar">
         <ul>
+        <li class="right_icon" id="regions" title="Регионы">
+                <img src="{% static 'map/images/regions.svg' %}" alt="regions">
+                <div id="filter_region">
+                    <h3>Выберите регион</h3>
+                    <select name="region_filter" id="region_filter">
+                        <option selected=""></option>
+                        {% if regions %}
+                        {% for region in regions %}
+                        <option vlaue="{{ region.id }}">{{ region.name_ru }}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+
+            </li>
             <li class="right_icon" id="passenger_transport" title="легковой транспорт">
                 <img src="{% static 'map/images/passenger_transport.svg' %}" alt="passenger_transport">
             </li>

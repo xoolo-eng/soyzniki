@@ -1,4 +1,4 @@
-var servis; // название выбранного сервиса
+var servis;
 var start_position;
 var clasters = {
 	all_transport: undefined,
@@ -148,24 +148,26 @@ icons.onclick = function(event){
 		$('#freight_transport').removeClass('icon_action');
 	}
 }
+$('#regions').click(function() {
+	$(this).children('div').toggleClass('view_box');
+	if ($(this).find('#region_filter').val() == '') {
+		$(this).toggleClass('icon_action');
+	}
+});
 
 $('#passenger_transport').click(function(){
 	var open_servis = $('.active').get(0);
 	if (open_servis !== undefined){
 		if($(this).hasClass('icon_action')){
 			$(this).removeClass('icon_action');
-			clasters.freight_transport.addTo(map);
 		}
 		else {
 			if($('#freight_transport').hasClass('icon_action')){
 				$('#freight_transport').removeClass('icon_action');
-				clasters.passenger_transport.addTo(map);
 				$(this).addClass('icon_action');
-				map.removeLayer(clasters.freight_transport);
 			}
 			else{
 				$(this).addClass('icon_action');
-				map.removeLayer(clasters.freight_transport);
 			}
 		}
 	}
@@ -175,18 +177,14 @@ $('#freight_transport').click(function(){
 	if (open_servis !== undefined){
 		if($(this).hasClass('icon_action')){
 			$(this).removeClass('icon_action');
-			clasters.passenger_transport.addTo(map);
 		}
 		else {
 			if($('#passenger_transport').hasClass('icon_action')){
 				$('#passenger_transport').removeClass('icon_action');
-				clasters.freight_transport.addTo(map);
 				$(this).addClass('icon_action');
-				map.removeLayer(clasters.passenger_transport);
 			}
 			else{
 				$(this).addClass('icon_action');
-				map.removeLayer(clasters.passenger_transport);
 			}
 		}
 	}
@@ -271,8 +269,8 @@ map.on('popupopen', function(event){
 });
 function get_point(servis, country){
 	start_animate();
-	if(localStorage[`${servis}_point`] !== undefined){
-		var points = JSON.parse(localStorage[`${servis}_point`]);
+	if(window.localStorage[`${servis}_point`] !== undefined){
+		var points = JSON.parse(window.localStorage[`${servis}_point`]);
 		stop_animate();
 		add_points(points['points'], points['marker']);
 	}
@@ -286,15 +284,15 @@ function get_point(servis, country){
 			}
 		}).done(function(data){
 			try {
-				localStorage[`${servis}_point`] = data;
+				window.localStorage[`${servis}_point`] = data;
 			} catch (e) {
 				if (e == QUOTA_EXCEEDED_ERR) {
-					localStorage.clear();
+					window.localStorage.clear();
 				}
 			}
-			localStorage.clear();
-			localStorage[`${servis}_point`] = data;
-			var points = JSON.parse(localStorage[`${servis}_point`]);
+			window.localStorage.clear();
+			window.localStorage[`${servis}_point`] = data;
+			var points = JSON.parse(window.localStorage[`${servis}_point`]);
 			stop_animate();
 			add_points(points['points'], points['marker']);
 		});

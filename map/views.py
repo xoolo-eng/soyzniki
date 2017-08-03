@@ -23,9 +23,11 @@ def link_to_name(string):
 def map(request, country_name):
     services = Services.objects.filter(active=True)
     country = Country.objects.get(name_en=link_to_name(country_name))
+    regions = country.region_counrty.all()
     data = {
         'services': services,
         'country': country,
+        'regions': regions
     }
     if is_login(request):
         user = User.objects.get(id=user_id(request))

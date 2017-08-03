@@ -1,8 +1,65 @@
-<svg id="svg5124" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="32.366mm" width="32.366mm" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 0 114.68101 114.681">
- <g id="layer1" transform="translate(372.14 394.78)">
-  <g id="g5684" fill="#444547" transform="matrix(3.8228 0 0 3.8228 1050.5 854.94)">
-   <path id="path252" d="m-371.63-318.12v10.886h-0.517v1.542h3.707c0-1.63 1.465-3 3.103-3s3.103 1.37 3.103 3h8.793v-12.43h-18.19zm29.224 10.887v-2.058c0-0.857-0.69-1.63-1.638-1.63h-1.207c-0.173 0-0.346-0.084-0.518-0.256l-2.328-3.6c-0.086-0.17-0.345-0.257-0.517-0.257h-4.396v9.342h0.863c0.086-1.63 1.465-3 3.103-3s3.017 1.37 3.103 3h3.793v-1.543h-0.26zm-8.88-2.315h-0.948v-0.515h0.95v0.515zm-0.948-1.8v-3.172h2.76c0.516 0 0.86 0.257 1.206 0.6l1.552 2.572h-5.518z"/>
-   <path id="path254" d="m-348.98-308.18c-1.541 0-2.6565 1.2-2.6565 2.657s1.2 2.657 2.6565 2.657c1.4575 0 2.6575-1.2 2.6575-2.657 0.0865-1.457-1.1135-2.657-2.6565-2.657zm0 4.03c-0.77052 0-1.372-0.6-1.372-1.373 0-0.77 0.60149-1.37 1.372-1.37 0.77151 0 1.372 0.6 1.372 1.37 0 0.772-0.51401 1.372-1.372 1.372zm-16.37-4.116c-1.543 0-2.6565 1.2-2.6565 2.658 0 1.457 1.2 2.657 2.6575 2.657 1.4565 0 2.6565-1.2 2.6565-2.657 0.0865-1.372-1.2-2.658-2.6565-2.658zm0 4.115c-0.7715 0-1.372-0.6-1.372-1.372 0-0.77 0.60051-1.37 1.372-1.37 0.77151 0 1.372 0.6 1.372 1.37 0 0.772-0.60051 1.372-1.372 1.372z"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg5124"
+   height="32.366mm"
+   width="32.366mm"
+   version="1.1"
+   viewBox="0 0 114.68101 114.681"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="freight_transport.svg">
+  <metadata
+     id="metadata11">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="5.8204848"
+     inkscape:cx="37.779763"
+     inkscape:cy="54.289994"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5124" />
+  <g
+     style="fill:#00a2ff;fill-opacity:1"
+     transform="matrix(3.8228,0,0,3.8228,1422.64,1249.72)"
+     id="g5684">
+    <path
+       inkscape:connector-curvature="0"
+       d="m -371.63,-318.12 0,10.886 -0.517,0 0,1.542 3.707,0 c 0,-1.63 1.465,-3 3.103,-3 1.638,0 3.103,1.37 3.103,3 l 8.793,0 0,-12.43 -18.19,0 z m 29.224,10.887 0,-2.058 c 0,-0.857 -0.69,-1.63 -1.638,-1.63 l -1.207,0 c -0.173,0 -0.346,-0.084 -0.518,-0.256 l -2.328,-3.6 c -0.086,-0.17 -0.345,-0.257 -0.517,-0.257 l -4.396,0 0,9.342 0.863,0 c 0.086,-1.63 1.465,-3 3.103,-3 1.638,0 3.017,1.37 3.103,3 l 3.793,0 0,-1.543 -0.26,0 z m -8.88,-2.315 -0.948,0 0,-0.515 0.95,0 0,0.515 z m -0.948,-1.8 0,-3.172 2.76,0 c 0.516,0 0.86,0.257 1.206,0.6 l 1.552,2.572 -5.518,0 z"
+       id="path252"
+       style="fill:#00a2ff;fill-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       d="m -348.98,-308.18 c -1.541,0 -2.6565,1.2 -2.6565,2.657 0,1.457 1.2,2.657 2.6565,2.657 1.4575,0 2.6575,-1.2 2.6575,-2.657 0.0865,-1.457 -1.1135,-2.657 -2.6565,-2.657 z m 0,4.03 c -0.77052,0 -1.372,-0.6 -1.372,-1.373 0,-0.77 0.60149,-1.37 1.372,-1.37 0.77151,0 1.372,0.6 1.372,1.37 0,0.772 -0.51401,1.372 -1.372,1.372 z m -16.37,-4.116 c -1.543,0 -2.6565,1.2 -2.6565,2.658 0,1.457 1.2,2.657 2.6575,2.657 1.4565,0 2.6565,-1.2 2.6565,-2.657 0.0865,-1.372 -1.2,-2.658 -2.6565,-2.658 z m 0,4.115 c -0.7715,0 -1.372,-0.6 -1.372,-1.372 0,-0.77 0.60051,-1.37 1.372,-1.37 0.77151,0 1.372,0.6 1.372,1.37 0,0.772 -0.60051,1.372 -1.372,1.372 z"
+       id="path254"
+       style="fill:#00a2ff;fill-opacity:1" />
   </g>
- </g>
 </svg>

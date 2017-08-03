@@ -15,7 +15,7 @@
    id="svg4616"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="position.svg"
+   sodipodi:docname="regions.svg"
    inkscape:export-filename="/home/hacker/Изображения/mHundred.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8"
-     inkscape:cx="54.471027"
-     inkscape:cy="84.81474"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="20.713108"
+     inkscape:cy="56.166258"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -73,11 +73,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-291.58907,-100.18954)">
-    <path
-       style="fill:#00a2ff;fill-opacity:1;stroke:#13445e;stroke-width:0.80470079;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 349.54234,100.58516 c -23.37352,0 -42.32279,18.94783 -42.32279,42.32135 0,23.3735 18.91487,42.7783 42.32279,71.56297 23.52563,-28.87076 42.32135,-48.18946 42.32135,-71.56297 0,-23.37352 -18.94782,-42.32135 -42.32135,-42.32135 z m -0.001,10.60144 a 31.72055,31.72055 0 0 1 31.72137,31.71991 31.72055,31.72055 0 0 1 -31.72137,31.72136 31.72055,31.72055 0 0 1 -31.71991,-31.72136 31.72055,31.72055 0 0 1 31.71991,-31.71991 z m 0,14.27447 a 17.446301,17.446301 0 0 0 -17.44544,17.44544 17.446301,17.446301 0 0 0 17.44544,17.4469 17.446301,17.446301 0 0 0 17.4469,-17.4469 17.446301,17.446301 0 0 0 -17.4469,-17.44544 z m 0,8.72272 a 8.7231509,8.7231509 0 0 1 8.72419,8.72272 8.7231509,8.7231509 0 0 1 -8.72419,8.72417 8.7231509,8.7231509 0 0 1 -8.72272,-8.72417 8.7231509,8.7231509 0 0 1 8.72272,-8.72272 z"
-       id="path4141"
-       inkscape:connector-curvature="0" />
     <g
        id="g227"
        transform="matrix(1.4923321,0,0,1.6737246,189.4733,-139.80269)"
@@ -95,5 +90,17 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#ffffff;stroke-miterlimit:10;stroke-opacity:1" />
     </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:162.06939697px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#00a2ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="292.59042"
+       y="214.16365"
+       id="text4170"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4172"
+         x="292.59042"
+         y="214.16365"
+         style="-inkscape-font-specification:'Ubuntu Medium';font-family:Ubuntu;font-weight:500;font-style:normal;font-stretch:normal;font-variant:normal">R</tspan></text>
   </g>
 </svg>

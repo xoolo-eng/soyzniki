@@ -4,6 +4,21 @@
 *
 */
 
+function test_support(){
+        /*
+        проверка на поддержку локальноно хранилища, если поддержки
+        нет, данные запишутся в куки
+        */
+        try {
+            window.localStorage;
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+    }
+
+
 var storage = {
     /*
     Объект хранилище. Держит в памяти значения последних 'действий':
@@ -15,40 +30,27 @@ var storage = {
     поле 'name' хранит название ключа для сохранения в локальном
     хранилище или куках
     */
-    var support = test_support();
-    var country = ACTIV_COUNTRY;
-    var map = {name: 'map', coords: false, zoom: 4, scroll: 0};
-    var servis = {name: 'servis', point: false};
-    var filters = {name: 'filters', transport: false, region: false, search: false};
-    var points = {name: 'points', data: false};
+    
+    support: test_support(),
+    country: ACTIV_COUNTRY,
+    map: {name: 'map', coords: false, zoom: 4, scroll: 0},
+    servis: {name: 'servis', point: false},
+    filters: {name: 'filters', transport: false, region: {name: false, id: 0}, search: false},
+    points: {name: 'points', data: false},
 
-    function() test_support{
-        /*
-        проверка на поддержку локальноно хранилища, если поддержки
-        нет, данные запишутся в куки
-        */
-        try {
-            window.localStorage;
-            suppotr = true;
-        }
-        catch (e) {
-            suppotr false;
-        }
-    };
-
-    function update_storage(obj) {
+    update_storage: function(obj) {
         /*
         обнавление данных в хранилище браузера
         */
-        if (support) {
+        if (this.support) {
             try {
-                window.localStorage[obj.name] = obj;
+                window.localStorage[country][obj.name] = obj;
             }
             catch (e) {
                 if (e.number == 22) {
                     window.localStorage.clear();
                     try {
-                        window.localStorage[obj.name] = obj;
+                        window.localStorage[country][obj.name] = obj;
                     }
                     catch (e) {
                         if (e.number == 22) {
@@ -63,10 +65,10 @@ var storage = {
                 path: '/map/'
             });
         }
-    };
+    },
 
     is_clear: function() {
-        if(!filters.transport and !filters.region and !filters.search and !points.data and !servis.point)
+        if((!this.filters.transport) && (!this.filters.region) && (!this.filters.search) && (!this.points.data) && (!this.servis.point))
             {return true;}
         else
             {return false;}
@@ -76,30 +78,30 @@ var storage = {
         /*
         загрузка данных хранилища в память
         */
-        if (support) {
-            if (window.localStorage[country]['map'] !== undefined){
-                map = window.localStorage[country]['map'];
+        if (this.support) {
+            if (window.localStorage[this.country]['map'] !== undefined){
+                this.map = window.localStorage[this.country]['map'];
             }
-            if (window.localStorage[country]['servis'] !== undefined){
-                servis = window.localStorage[country]['servis'];
+            if (window.localStorage[this.country]['servis'] !== undefined){
+                this.servis = window.localStorage[this.country]['servis'];
             }
-            if (window.localStorage[country]['filters'] !== undefined){
-                filters = window.localStorage[country]['filters'];
+            if (window.localStorage[this.country]['filters'] !== undefined){
+                this.filters = window.localStorage[this.country]['filters'];
             }
-            if (window.localStorage[country]['points'] !== undefined){
-                points = window.localStorage[country]['points'];
+            if (window.localStorage[this.country]['points'] !== undefined){
+                this.points = window.localStorage[this.country]['points'];
             }
             window.localStorage.clear();
         }
         else {
-            if ($.cookie(country + '_map') !== undefined) {
-                map = JSON.parse($.cookie(country + '_map'));
+            if ($.cookie(this.country + '_map') !== undefined) {
+                this.map = JSON.parse($.cookie(this.country + '_map'));
             }
-            if ($.cookie(country + '_servis') !== undefined) {
-                servis = JSON.parse($.cookie(country + '_servis'));
+            if ($.cookie(this.country + '_servis') !== undefined) {
+                this.servis = JSON.parse($.cookie(this.country + '_servis'));
             }
-            if ($.cookie(country + '_filters') !== undefined) {
-                filters = JSON.parse($.cookie(country + '_filters'));
+            if ($.cookie(this.country + '_filters') !== undefined) {
+                this.filters = JSON.parse($.cookie(this.country + '_filters'));
             }
         }
     },
@@ -107,83 +109,82 @@ var storage = {
         /*
         запись данных хранилища из памяти
         */
-        update_storage(map);
-        update_storage(servis);
-        update_storage(filters);
-        update_storage(points);
+        this.update_storage(this.map);
+        this.update_storage(this.servis);
+        this.update_storage(this.filters);
+        this.update_storage(this.points);
     },
     get_map: function() {
-        var map_data = map;
+        var map_data = this.map;
         delete map_data.name;
         return map_data;
     },
     set_map: function(obj) {
-        if(obj.coords !== undefined) map.coords = obj.coords;
-        if(obj.zoom !== undefined) map.zoom = obj.zoom;
-        if(obj.scroll !== undefined) map.scroll = obj.scroll;
-        update_storage(map);
+        if(obj.coords !== undefined) this.map.coords = obj.coords;
+        if(obj.zoom !== undefined) this.map.zoom = obj.zoom;
+        if(obj.scroll !== undefined) this.map.scroll = obj.scroll;
+        this.update_storage(this.map);
     },
     clear_map: function() {
-        map.coords = false;
-        map.zoom = 4;
-        map.scroll = 0;
+        this.map.coords = false;
+        this.map.zoom = 4;
+        this.map.scroll = 0;
     },
     get_servis: function() {
-        var servis_data = servis;
+        var servis_data = this.servis;
         delete servis_data.name;
         return servis_data;
     },
     set_servis: function(servis_point) {
-        servis.poinst = servis_point;
-        update_storage(servis)
+        this.servis.poinst = servis_point;
+        this.update_storage(this.servis)
     },
     clear_servis: function() {
-        servis.point = false;
-    }
+        this.servis.point = false;
+    },
     get_filters: function() {
-        var filters_data = filters;
+        var filters_data = this.filters;
         delete filters_data.name;
         return filters_data;
-    }
+    },
     set_filters: function(obj) {
-        if(obj.transport !== undefined) filters.transport = obj.transport;
-        if(obj.region !== undefined) filters.region = obj.region;
-        if(obj.search !== undefined) filters.search = obj.search;
-        update_storage(filters);
+        if(obj.transport !== undefined) this.filters.transport = obj.transport;
+        if(obj.region !== undefined) this.filters.region = obj.region;
+        if(obj.search !== undefined) this.filters.search = obj.search;
+        this.update_storage(this.filters);
     },
     clear_filters: function() {
-        filters.transport = false;
-        filter.region = false;
-        filters.search = false;
+        this.filters.transport = false;
+        this.filters.region = {name: false, id: 0};
+        this.filters.search = false;
     },
     get_points: function() {
-        var points_data = points;
+        var points_data = this.points;
         delete points_data.name;
         return points_data;
     },
-    set_points: function() {
-        var points_data = points;
-        delete points;
-        return points_data;
-    }
+    set_points: function(points) {
+        this.points.data = points;
+        this.update_storage(this.points);
+    },
     clear_points: function() {
         points.data = false;
     }
 };
 
-/*
-*
-обработка url на предмет региона и/или активного сервиса
-*
-*/
-function parse_url() {
-    /*
-    Разбор url на части. Возвращает массив из значений после первого слеша
-    */
-    var url = window.location.pathname;
-    var url_list = url.split('/').slice(1, -2);
-    return url_list;
-}
+// /*
+// *
+// обработка url на предмет региона и/или активного сервиса
+// *
+// */
+// function parse_url() {
+    
+//     Разбор url на части. Возвращает массив из значений после первого слеша
+    
+//     var url = window.location.pathname;
+//     var url_list = url.split('/').slice(1, -2);
+//     return url_list;
+// }
 
 /*
 *
@@ -207,39 +208,16 @@ function initialaze() {
         }
     });
     storage.load_storage();
-    if(stroage.is_clear()) {
-        url_data = par_seurl();
-        switch(url_data.length) {
-            case 2: {break;}
-            case 3: {
-                // проверка на соответствие последнего значения
-                break;
-            }
-            case 4: {
-                // проверка на соответствие последнего значения
-                // проверка на соответствие предпоследнего значения
-                break;
-            }
-            case 5: {
-                // последнее значение - поисковое слово
-                // проверка на соответствие предпоследнего значения
-                // проверка на соответствие среднего значения
-            }
-        }
-        /*
-        если значений больше двух
-        проверка последних значений
-        на предмет совпадения с регионами
-        и названиями точек
-        если есть совпадения, то заргрузка нужных данных
-        */
+    if (storage.is_clear()) {
+        console.log
     }
+    console.log(storage);
 }
 
 $(document).ready(function() {
     initialaze();
 });
 
-$(window).upload(function() {
+$(window).unload(function() {
     storage.write_storage();
 });

@@ -9,6 +9,35 @@
 <link rel="stylesheet" href="{% static 'soyzniki/css/MarkerCluster.css' %}">
 <link rel="stylesheet" href="{% static 'map/css/map.css'%}">
 <script type="text/javascript">var ACTIV_COUNTRY = '{{ country.name_en }}';</script>
+<script type="text/javascript" id="ready">
+    history.pushState('', '', '{{ response_url }}');
+    var request_data = {
+        {% if find_region %}
+        region: {name: '{{ find_region.name_en }}', id: {{ find_region.id }}},
+        {% else %}
+        region: {name: false, id: 0},
+        {% endif %}
+        {% if search %}
+        search: '{{ search }}',
+        {% else %}
+        search: false,
+        {% endif %}
+        {% if servis %}
+        point: '{{ servis.name_en }}'
+        {% else %}
+        point: false,
+        {% endif %}
+    }
+    var arr = new Array(
+        0,1);
+    if (window.localStorage[ACTIV_COUNTRY] === undefined) {
+        window.localStorage.clear();
+        window.localStorage.setItem(ACTIV_COUNTRY, arr)
+    }
+    console.log(window.localStorage[ACTIV_COUNTRY]);
+    // document.getElementById('ready').remove();
+    
+</script>
 {% endblock style %}
 {% block reclama %}{% endblock reclama %}
 {% block map %}
@@ -39,7 +68,7 @@
     </div>
     <div id="right_bar">
         <ul>
-        <li class="right_icon" id="regions" title="Регионы">
+            <li class="right_icon" id="regions" title="Регионы">
                 <img src="{% static 'map/images/regions.svg' %}" alt="regions">
                 <div id="filter_region">
                     <h3>Выберите регион</h3>
@@ -74,5 +103,5 @@
 <script src="{% static 'soyzniki/js/markersCluster.js'%}"></script>
 <script src="{% static 'soyzniki/js/jquery.cookie.js'%}"></script>
 <script src="{% static 'soyzniki/js/device.min.js'%}"></script>
-<script src="{% static 'map/js/map.js' %}"></script>
+<script src="{% static 'map/js/new_map.js' %}"></script>
 {% endblock script %}

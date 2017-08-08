@@ -51,9 +51,9 @@ $(window).unload(function(){
 	});
 });
 function initialize(){
-	if ($.cookie('saveresult') === undefined) {
-		localStorage.clear();
-	}
+	// if ($.cookie('saveresult') === undefined) {
+	// 	localStorage.clear();
+	// }
 	var map_cookie;
 	var cookie_name = `map_${country}`;
 	if($.cookie(cookie_name) !== undefined)
@@ -290,7 +290,7 @@ function get_point(servis, country){
 					window.localStorage.clear();
 				}
 			}
-			window.localStorage.clear();
+			// window.localStorage.clear();
 			window.localStorage[`${servis}_point`] = data;
 			var points = JSON.parse(window.localStorage[`${servis}_point`]);
 			stop_animate();

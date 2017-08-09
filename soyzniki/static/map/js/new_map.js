@@ -3,8 +3,20 @@
 Объект хранилище, для сохранения настроек проиложения
 *
 */
+var map = L.map('map', {minZoom: 3});
 
-function test_support(){
+var storage = {
+    /*
+    Объект хранилище. Держит в памяти значения последних 'действий':
+        map - положение карты, зум, положение панели с сервисами;
+        servis - название активированного сервиса;
+        filters - актиированные пользователем филтры данных, позиционирования;
+        points - данные последнего запроса точек по одному сервису;
+
+    поле 'name' хранит название ключа для сохранения в локальном
+    хранилище или куках
+    */
+    test_support: function(){
         /*
         проверка на поддержку локальноно хранилища, если поддержки
         нет, данные запишутся в куки
@@ -16,26 +28,13 @@ function test_support(){
         catch (e) {
             return false;
         }
-    }
+    },
 
-
-var storage = {
-    /*
-    Объект хранилище. Держит в памяти значения последних 'действий':
-        map - положение карты, зум, положение панели с сервисами;
-        servis - название активированного сервиса;
-        filters - актиированные пользователем филтры данных;
-        points - данные последнего запроса точек по одному сервису;
-
-    поле 'name' хранит название ключа для сохранения в локальном
-    хранилище или куках
-    */
-    
-    support: test_support(),
+    support: false,
     country: ACTIV_COUNTRY,
     map: {name: 'map', coords: false, zoom: 4, scroll: 0},
     servis: {name: 'servis', point: false},
-    filters: {name: 'filters', transport: false, region: {name: false, id: 0}, search: false},
+    filters: {name: 'filters', transport: false, region: {name: false, id: 0}, search: false, positon: false},
     points: {name: 'points', data: false},
 
     update_storage: function(obj) {
@@ -43,25 +42,14 @@ var storage = {
         обнавление данных в хранилище браузера
         */
         if (this.support) {
-            try {
-                window.localStorage[country][obj.name] = obj;
-            }
-            catch (e) {
-                if (e.number == 22) {
-                    window.localStorage.clear();
-                    try {
-                        window.localStorage[country][obj.name] = obj;
-                    }
-                    catch (e) {
-                        if (e.number == 22) {
-                            console.log('Переполнение хранилища')
-                        }
-                    }
-                }
+            if (window.localStorage.getItem(this.country) !== null) {
+                var saved_data = JSON.parse(window.localStorage.getItem(this.country));
+                saved_data[obg.name] = obj;
+                window.localStorage.setItem(this.country, JSON.stringify(saved_data));
             }
         }
         else {
-            $.cookie(obj.name, JSON.stringify(obj), {
+            $.cookie(this.country + '_' + obj.name, JSON.stringify(obj), {
                 path: '/map/'
             });
         }
@@ -76,22 +64,17 @@ var storage = {
 
     load_storage: function() {
         /*
-        загрузка данных хранилища в память
+        загрузка данных хранилища в память из хранилища
         */
+        this.support = this.test_support();
         if (this.support) {
-            if (window.localStorage[this.country]['map'] !== undefined){
-                this.map = window.localStorage[this.country]['map'];
+            if (window.localStorage.getItem(this.country) !== null) {
+                var saved_data = JSON.parse(window.localStorage.getItem(this.country));
+                this.map = saved_data.map;
+                this.servis = saved_data.servis;
+                this.filters = saved_data.filters;
+                this.points = saved_data.points;
             }
-            if (window.localStorage[this.country]['servis'] !== undefined){
-                this.servis = window.localStorage[this.country]['servis'];
-            }
-            if (window.localStorage[this.country]['filters'] !== undefined){
-                this.filters = window.localStorage[this.country]['filters'];
-            }
-            if (window.localStorage[this.country]['points'] !== undefined){
-                this.points = window.localStorage[this.country]['points'];
-            }
-            window.localStorage.clear();
         }
         else {
             if ($.cookie(this.country + '_map') !== undefined) {
@@ -107,7 +90,7 @@ var storage = {
     },
     write_storage: function() {
         /*
-        запись данных хранилища из памяти
+        запись данных хранилища из памяти в хранилище
         */
         this.update_storage(this.map);
         this.update_storage(this.servis);
@@ -151,12 +134,14 @@ var storage = {
         if(obj.transport !== undefined) this.filters.transport = obj.transport;
         if(obj.region !== undefined) this.filters.region = obj.region;
         if(obj.search !== undefined) this.filters.search = obj.search;
+        if(obj.positon !== undefined) this.filters.positon = obj.positon;
         this.update_storage(this.filters);
     },
     clear_filters: function() {
         this.filters.transport = false;
         this.filters.region = {name: false, id: 0};
         this.filters.search = false;
+        this.filters.position = false;
     },
     get_points: function() {
         var points_data = this.points;
@@ -172,19 +157,6 @@ var storage = {
     }
 };
 
-// /*
-// *
-// обработка url на предмет региона и/или активного сервиса
-// *
-// */
-// function parse_url() {
-    
-//     Разбор url на части. Возвращает массив из значений после первого слеша
-    
-//     var url = window.location.pathname;
-//     var url_list = url.split('/').slice(1, -2);
-//     return url_list;
-// }
 
 /*
 *
@@ -208,10 +180,52 @@ function initialaze() {
         }
     });
     storage.load_storage();
-    if (storage.is_clear()) {
-        console.log
+    L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    if (storage.get_map().coords) {
+        map.setView(storage.get_map().coords, storage.get_map().zoom);
     }
-    console.log(storage);
+    else {
+        $.ajax({
+            url: '/map/get_lat_lng',
+            type: 'POST',
+            data: {
+                'country': ACTIV_COUNTRY
+            },
+            dataType: 'json'
+        }).done(function(data){
+            map.setView(data['lat_lng'], 8)
+        });
+    }
+
+    if (storage.get_filters().transport) {
+        $('#' + storage.get_filters().transport).addClass('icon_action');
+    }
+    if (storage.get_filters().position) {
+        $('#positon').addClass('icon_action');
+        // установка позиционирования
+    }
+    if (storage.get_filters().search) {
+        $('#search').addClass('icon_action');
+        $('#search_filter').val(storage.get_filters().search);
+    }
+    if (storage.get_filters().region.name) {
+        $('#regions').addClass('icon_action');
+        var option = $('#region_filter').children('option').get()
+        $(option[0]).removeAttr('selected');
+        for (i=1;i<option.length; i++) {
+            if ($(option[i]).val() == storage.get_filters().region.id) {
+                $(option[i]).attr('selected', '');
+                break;
+            }
+        }
+    }
+    if (storage.get_map().scroll) {
+        $('#icons').scrollTop(storage.get_map().scroll);
+    }
+    if (storage.get_servis().point) {
+        $('#' + storage.get_servis().point).addClass('active');
+        // загрузка точек
+    }
 }
 
 $(document).ready(function() {

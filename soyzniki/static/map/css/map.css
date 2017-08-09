@@ -241,11 +241,11 @@ body {
     margin-top: 50px;
 }
 
-#right_bar #regions > div {
+#right_bar  .filter_box {
     display: none;
 } 
 
-#right_bar #regions .view_box {
+#right_bar  .filter_box.view_box {
     display: block;
     position: absolute;
     width: 220px;
@@ -256,7 +256,7 @@ body {
     background: #13445E;
 }
 
-#right_bar #regions .view_box:after {
+#right_bar  .filter_box.view_box:after {
     content: "";
     position: absolute;
     top: 10px;
@@ -267,12 +267,17 @@ body {
     border-bottom-color: transparent;
 }
 
-#right_bar #regions .view_box h3 {
+#right_bar  .filter_box.view_box h3 {
     color: #ffffff;
     text-align: center;
 }
 
-#right_bar #regions .view_box select {
+#right_bar  .filter_box.view_box input {
+    width: 100%;
+    background: #ffffff;
+}
+
+#right_bar  .filter_box.view_box select {
     width: 100%;
     background: #ffffff;
 }

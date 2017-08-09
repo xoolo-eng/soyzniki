@@ -148,6 +148,12 @@ icons.onclick = function(event){
 		$('#freight_transport').removeClass('icon_action');
 	}
 }
+$('#search').click(function() {
+	$(this).children('div').toggleClass('view_box');
+	if ($(this).find('#search_filter').val() == '') {
+		$(this).toggleClass('icon_action');
+	}
+});
 $('#regions').click(function() {
 	$(this).children('div').toggleClass('view_box');
 	if ($(this).find('#region_filter').val() == '') {

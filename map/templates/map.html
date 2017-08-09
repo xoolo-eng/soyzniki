@@ -11,32 +11,80 @@
 <script type="text/javascript">var ACTIV_COUNTRY = '{{ country.name_en }}';</script>
 <script type="text/javascript" id="ready">
     history.pushState('', '', '{{ response_url }}');
-    var request_data = {
+    if (typeof(Storage) !== "undefined") {
+        /*
+        Если есть сохранение
+        */
+        if (window.localStorage.getItem(ACTIV_COUNTRY) !== null) {
+            var saved_data = JSON.parse(window.localStorage.getItem(ACTIV_COUNTRY));
+            {% if servis %}
+            saved_data.servis.point = '{{ servis.name_en }}';
+            {% endif %}
+            {% if find_region %}
+            saved_data.filters.region = {
+                name: '{{ find_region.name_en }}',
+                id: {{ find_region.id }}
+            };
+            {% endif %}
+            {% if search %}
+            saved_data.filters.search = '{{ search }}';
+            {% endif %}
+            window.localStorage.setItem(ACTIV_COUNTRY, JSON.stringify(saved_data));
+        }
+        /*
+        Если данных в хранилище нет
+        */
+        else {
+            window.localStorage.clear();
+            var response_data = new Object();
+            response_data.map = {name: 'map', coords: false, zoom: 4, scroll: 0};
+            response_data.servis = {name: 'servis', point: false};
+            response_data.filters = {name: 'filters', transport: false, region: {name: false, id: 0}, search: false, positon: false};
+            response_data.points = {name: 'points', data: false};
+            {% if servis %}
+            response_data.servis.point = '{{ servis.name_en }}';
+            {% endif %}
+            {% if find_region %}
+            response_data.filters.region = {
+                name: '{{ find_region.name_en }}',
+                id: {{ find_region.id }}
+            };
+            {% endif %}
+            {% if search %}
+            response_data.filters.search = '{{ search }}';
+            {% endif %}
+            window.localStorage.setItem(ACTIV_COUNTRY, JSON.stringify(response_data));
+        }
+    } else {
+        var response_data = new Object();
+        response_data.map = {name: 'map', coords: false, zoom: 4, scroll: 0};
+        response_data.servis = {name: 'servis', point: false};
+        response_data.filters = {name: 'filters', transport: false, region: {name: false, id: 0}, search: false, positon: false};
+        response_data.points = {name: 'points', data: false};
+        {% if servis %}
+        response_data.servis.point = '{{ servis.name_en }}';
+        {% endif %}
         {% if find_region %}
-        region: {name: '{{ find_region.name_en }}', id: {{ find_region.id }}},
-        {% else %}
-        region: {name: false, id: 0},
+        response_data.filters.region = {
+            name: '{{ find_region.name_en }}',
+            id: {{ find_region.id }}
+        };
         {% endif %}
         {% if search %}
-        search: '{{ search }}',
-        {% else %}
-        search: false,
+        response_data.filters.search = '{{ search }}';
         {% endif %}
-        {% if servis %}
-        point: '{{ servis.name_en }}'
-        {% else %}
-        point: false,
-        {% endif %}
+        $.cookie(ACTIVE_COUNTRY + '_' + response_data.map.name, JSON.stringify(response_data.map), {
+            path: '/map/'
+        });
+        $.cookie(ACTIVE_COUNTRY + '_' + response_data.servis.name, JSON.stringify(response_data.servis), {
+            path: '/map/'
+        });
+        $.cookie(ACTIVE_COUNTRY + '_' + response_data.filters.name, JSON.stringify(response_data.filters), {
+            path: '/map/'
+        });
     }
-    var arr = new Array(
-        0,1);
-    if (window.localStorage[ACTIV_COUNTRY] === undefined) {
-        window.localStorage.clear();
-        window.localStorage.setItem(ACTIV_COUNTRY, arr)
-    }
-    console.log(window.localStorage[ACTIV_COUNTRY]);
-    // document.getElementById('ready').remove();
-    
+    var script = document.getElementById('ready');
+    script.remove();
 </script>
 {% endblock style %}
 {% block reclama %}{% endblock reclama %}
@@ -68,20 +116,26 @@
     </div>
     <div id="right_bar">
         <ul>
+            <li class="right_icon" id="search" title="Поиск">
+                <img src="{% static 'map/images/search.svg' %}" alt="search">
+                <div class="filter_box">
+                    <h3>Поиск по описанию</h3>
+                    <input type="text" name="search" id="search_filter">
+                </div>
+            </li>
             <li class="right_icon" id="regions" title="Регионы">
                 <img src="{% static 'map/images/regions.svg' %}" alt="regions">
-                <div id="filter_region">
+                <div class="filter_box">
                     <h3>Выберите регион</h3>
                     <select name="region_filter" id="region_filter">
                         <option selected=""></option>
                         {% if regions %}
                         {% for region in regions %}
-                        <option vlaue="{{ region.id }}">{{ region.name_ru }}</option>
+                        <option value="{{ region.id }}">{{ region.name_ru }}</option>
                         {% endfor %}
                         {% endif %}
                     </select>
                 </div>
-
             </li>
             <li class="right_icon" id="passenger_transport" title="легковой транспорт">
                 <img src="{% static 'map/images/passenger_transport.svg' %}" alt="passenger_transport">
@@ -92,6 +146,7 @@
             <li class="right_icon" id="position" title="мое местоположение">
                 <img src="{% static 'map/images/position.svg' %}" alt="position">
             </li>
+
         </ul>
     </div>
 </div>

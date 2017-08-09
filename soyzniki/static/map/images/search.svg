@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32.365593mm"
+   height="32.365593mm"
+   viewBox="0 0 114.68123 114.68124"
+   id="svg4616"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="search.svg"
+   inkscape:export-filename="/home/hacker/Изображения/mHundred.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4618">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4166">
+      <stop
+         style="stop-color:#916f6f;stop-opacity:0"
+         offset="0"
+         id="stop4168" />
+      <stop
+         style="stop-color:#916f6f;stop-opacity:0.38251367"
+         offset="1"
+         id="stop4170" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4166"
+       id="radialGradient4174"
+       cx="364.27933"
+       cy="142.17906"
+       fx="364.27933"
+       fy="142.17906"
+       r="35.310387"
+       gradientTransform="matrix(1.7910061,4.1485073e-7,-3.98632e-7,1.7209861,-288.14713,-102.50928)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="-3.2356784"
+     inkscape:cy="103.25511"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="false"
+     inkscape:snap-midpoints="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1026"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false">
+    <sodipodi:guide
+       position="13.261718,114.67969"
+       orientation="0,1"
+       id="guide3337" />
+    <sodipodi:guide
+       position="0,76.281253"
+       orientation="1,0"
+       id="guide3339" />
+    <sodipodi:guide
+       position="114.68749,71.316409"
+       orientation="1,0"
+       id="guide3341" />
+    <sodipodi:guide
+       position="77.472652,-0.0039062501"
+       orientation="0,1"
+       id="guide3343" />
+    <sodipodi:guide
+       position="114.68749,114.67969"
+       orientation="-0.70710678,0.70710678"
+       id="guide4153"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4621">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-291.58907,-100.18954)">
+    <path
+       style="fill:#00a2ff;stroke:none;fill-opacity:1"
+       d="M 72.6875 -0.009765625 A 42 42 0 0 0 30.6875 41.990234 A 42 42 0 0 0 42.144531 70.744141 L 39.175781 67.810547 L 0 107.45898 L 0 112.39648 L 2.3164062 114.68555 L 7.2714844 114.68555 L 46.466797 75.013672 L 44.425781 72.996094 A 42 42 0 0 0 72.6875 83.990234 A 42 42 0 0 0 114.6875 41.990234 A 42 42 0 0 0 72.6875 -0.009765625 z M 72.6875 6.6757812 A 35.314879 35.314879 0 0 1 108.00195 41.990234 A 35.314879 35.314879 0 0 1 72.6875 77.304688 A 35.314879 35.314879 0 0 1 37.373047 41.990234 A 35.314879 35.314879 0 0 1 72.6875 6.6757812 z "
+       transform="translate(291.58907,100.18954)"
+       id="rect4151" />
+    <ellipse
+       style="fill:url(#radialGradient4174);stroke:none;fill-opacity:1"
+       id="path4164"
+       cx="364.27933"
+       cy="142.17906"
+       rx="35.310387"
+       ry="35.312843" />
+  </g>
+</svg>

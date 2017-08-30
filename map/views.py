@@ -504,7 +504,7 @@ def map_load(request):
     if result.get('search'):
         data['search'] = result.get('search')
         response_url += '{}/'.format(
-            result.get('search').replace(' ', '+')
+            result.get('search').get('value').replace(' ', '+')
         )
     data['response_url'] = response_url
     if is_login(request):

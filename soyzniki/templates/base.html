@@ -74,7 +74,7 @@
           <ul>
             <li><a class="{{ home_class }}" href="/" >Главная</a></li>
             <li><a class="{{ news_class }}" href="/news/1/" >Новости</a></li>
-            <li><a class="{{ forum_class }} deburg" href="/">Форум</a></li> 
+            <li><a class="{{ forum_class }} deburg" href="/forum/">Форум</a></li> 
             <li><a class="{{ contacts_class }}" href="/project/contacts/">Контакты</a></li>
             <li><a class="{{ about_us_class }}" href="/project/description/">О проекте</a></li>
             <li>{% if not login %}<a href="/user/login/" >Вход</a>{% else %}<a class="{{ account_class }}" href="/partner/all/" >Кабинет</a>{% endif %}</li>
@@ -102,6 +102,8 @@
       {% endblock contacts %}
       {% block cookies %}
       {% endblock cookies %}
+      {% block forum %}
+      {% endblock forum %}
       {% block reclama %}
       <div id="reclama">
         <div class="header">

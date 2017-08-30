@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'comments',
     'partner',
     'project',
+    'forum',
     'django.contrib.admin',
 ]
 

@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls')),
     url(r'^licens/', include('project.urls')),
     url(r'^project/', include('project.urls')),
+    url(r'^forum/', include('forum.urls')),
     url(r'^$', include('home.urls'))
 ]

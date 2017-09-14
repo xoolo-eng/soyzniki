@@ -19,15 +19,24 @@
             var saved_data = JSON.parse(window.localStorage.getItem(ACTIV_COUNTRY));
             {% if servis %}
             saved_data.servis.point = '{{ servis.name_en }}';
+            {% else %}
+            saved_data.servis.point = false;
             {% endif %}
             {% if find_region %}
             saved_data.filters.region = {
                 name: '{{ find_region.name_en }}',
                 id: {{ find_region.id }}
             };
+            {% else %}
+            saved_data.filters.region = {
+                name: false,
+                id: 0
+            };
             {% endif %}
             {% if search %}
             saved_data.filters.search = '{{ search }}';
+            {% else %}
+            saved_data.filters.search = false;
             {% endif %}
             window.localStorage.setItem(ACTIV_COUNTRY, JSON.stringify(saved_data));
         }
@@ -105,7 +114,7 @@
                 {% for servis in services %}
                 <li id="{{ servis.name_en }}">                
                     <img src="/media/{{ servis.icon }}">
-                    <p>{{servis.name_ru|upper}}</p>
+                    <p>{{ servis.name_ru|upper }}</p>
                     <div class="mask">{% comment %}
                         <a href="/map/{{ country.name_en }}/{{ servis.name_en }}/"></a>{% endcomment %}
                     </div>
@@ -121,6 +130,7 @@
                 <div class="filter_box">
                     <h3>Поиск по описанию</h3>
                     <input type="text" name="search" id="search_filter">
+                    <button class="big_button">Выбрать</button>
                 </div>
             </li>
             <li class="right_icon" id="regions" title="Регионы">
@@ -131,10 +141,11 @@
                         <option selected=""></option>
                         {% if regions %}
                         {% for region in regions %}
-                        <option value="{{ region.id }}">{{ region.name_ru }}</option>
+                        <option name="{{ region.name_en }}" value="{{ region.id }}">{{ region.name_ru }}</option>
                         {% endfor %}
                         {% endif %}
                     </select>
+                    <button class="big_button">Выбрать</button>
                 </div>
             </li>
             <li class="right_icon" id="passenger_transport" title="только_легковой транспорт">

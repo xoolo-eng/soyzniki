@@ -2,7 +2,6 @@ from django.template.context_processors import csrf
 from soyzniki.main.auth import is_login, user_id, get_country_by_ip
 from django.http import HttpResponse, Http404
 from soyzniki.models import Country, Region
-# from django.core.cache import cache
 from django.shortcuts import render
 from partner.models import Point
 from map.models import Services
@@ -29,36 +28,36 @@ def find_values_request(line):
     совпадение по названию сервиса
     '''
     try:
-        Services.objects.get(name_ru__iexact=line)
+        Services.objects.get(name_ru__iexact=line.replace(' ', '_'))
     except Services.DoesNotExist:
         try:
-            Services.objects.get(name_en__iexact=line)
+            Services.objects.get(name_en__iexact=line.replace(' ', '_'))
         except Services.DoesNotExist:
             pass
         except Services.MultipleObjectsReturned:
             return {'servis': {
-                'value': line,
+                'value': line.replace(' ', '_'),
                 'accuracy': False,
                 'method': 'exact',
                 'lang': 'en'
             }}
         else:
             return {'servis': {
-                'value': line,
+                'value': line.replace(' ', '_'),
                 'accuracy': True,
                 'method': 'exact',
                 'lang': 'en'
             }}
     except Services.MultipleObjectsReturned:
         return {'servis': {
-            'value': line,
+            'value': line.replace(' ', '_'),
             'accuracy': False,
             'method': 'exact',
             'lang': 'ru'
         }}
     else:
         return {'servis': {
-            'value': line,
+            'value': line.replace(' ', '_'),
             'accuracy': True,
             'method': 'exact',
             'lang': 'ru'
@@ -68,36 +67,36 @@ def find_values_request(line):
     вхождение по названию сервиса
     '''
     try:
-        Services.objects.get(name_ru__icontains=line)
+        Services.objects.get(name_ru__icontains=line.replace(' ', '_'))
     except Services.DoesNotExist:
         try:
-            Services.objects.get(name_en__icontains=line)
+            Services.objects.get(name_en__icontains=line.replace(' ', '_'))
         except Services.DoesNotExist:
             pass
         except Services.MultipleObjectsReturned:
             return {'servis': {
-                'value': line,
+                'value': line.replace(' ', '_'),
                 'accuracy': False,
                 'method': 'contains',
                 'lang': 'en'
             }}
         else:
             return {'servis': {
-                'value': line,
+                'value': line.replace(' ', '_'),
                 'accuracy': True,
                 'method': 'contains',
                 'lang': 'en'
             }}
     except Services.MultipleObjectsReturned:
         return {'servis': {
-            'value': line,
+            'value': line.replace(' ', '_'),
             'accuracy': False,
             'method': 'contains',
             'lang': 'ru'
         }}
     else:
         return {'servis': {
-            'value': line,
+            'value': line.replace(' ', '_'),
             'accuracy': True,
             'method': 'contains',
             'lang': 'ru'
@@ -502,7 +501,7 @@ def map_load(request):
             find_servis.name_en.lower().replace(' ', '_')
         )
     if result.get('search'):
-        data['search'] = result.get('search')
+        data['search'] = result.get('search').get('value')
         response_url += '{}/'.format(
             result.get('search').get('value').replace(' ', '+')
         )
@@ -514,69 +513,76 @@ def map_load(request):
     data.update(csrf(request))
     return render(request, 'map.html', data)
 
-'''
-def map(request, country_name):
-    services = Services.objects.filter(active=True)
-    try:
-        country = Country.objects.get(
-            name_en=link_to_name(country_name),
-            active=True
-        )
-    except Country.DoesNotExist:
-        try:
-            country = Country.objects.get(
-                name_ru=link_to_name(country_name),
-                active=True
-            )
-        except Country.DoesNotExist:
-            data = {
-                'services': services
-            }
-            messages.info(request, 'Данной страны нет в списке')
-            messages.info(request, 'или она еще не активирована')
-            data.update(csrf(request))
-            return render(request, 'map.html', data)
-    regions = country.region_counrty.all()
-    data = {
-        'services': services,
-        'country': country,
-        'regions': regions
-    }
-    if is_login(request):
-        user = User.objects.get(id=user_id(request))
-        data['login'] = True
-        data['user'] = user
-    data.update(csrf(request))
-    return render(request, 'map.html', data)
-'''
-
 
 def find_point(request):
     if request.method == 'POST' and request.is_ajax():
-        country_name = link_to_name(request.POST.get('country'))
-        servis_name = request.POST.get('servis')
-        country = Country.objects.get(name_en=country_name)
-        servis = Services.objects.get(name_en=servis_name)
-        country_id = country.id
-        servis_id = servis.id
-        marker = servis.mark
-        query_points = Point.objects.filter(
-            country_id=country_id,
-            servis_id=servis_id,
-            active=True
+        country = request.POST.get('country')
+        servis = request.POST.get('servis')
+        region = request.POST.get('region')
+        transport = request.POST.get('transport')
+        search = request.POST.get('search')
+        try:
+            region = int(region)
+        except ValueError:
+            region = 0
+        if transport == 'false':
+            transport = False
+        else:
+            if transport == 'passenger':
+                transport = 2
+            if transport == 'freight':
+                transport = 3
+        if search == 'false':
+            search = False
+        country = Country.objects.get(
+            name_en=country
         )
-        all_points = []
-        for point in query_points:
-            all_points.append(
-                {
-                    'id': point.id,
-                    'lat': point.lat,
-                    'lon': point.lon
-                }
+        servis = Services.objects.get(
+            name_en=servis
+        )
+        all_points = Point.objects.filter(
+            country=country,
+            servis=servis,
+        )
+        if region:
+            all_points = all_points.filter(
+                region_id=region
             )
+        search_data = []
+        if search:
+            for record in all_points:
+                if search in record.name:
+                    search_data.append(record)
+                elif search in record.desc:
+                    search_data.append(record)
+                elif search in record.thelephones:
+                    search_data.append(record)
+                elif search in record.url:
+                    search_data.append(record)
+            all_points = search_data
+        points_data = []
+        if transport:
+            for point in all_points:
+                if point.transport == 1 or point.transport == transport:
+                    points_data.append(
+                        {
+                            'id': point.id,
+                            'lat': point.lat,
+                            'lon': point.lon
+                        }
+                    )
+        else:
+            for point in all_points:
+                points_data.append(
+                    {
+                        'id': point.id,
+                        'lat': point.lat,
+                        'lon': point.lon
+                    }
+                )
         points = {
-            'marker': str(marker),
-            'points': all_points
+            'marker': str(servis.mark),
+            'points': points_data
         }
         return HttpResponse(json.dumps(points))
 
@@ -610,9 +616,3 @@ def get_lat_lng(request):
             'lat_lng': [result.latitude, result.longitude],
         }
         return HttpResponse(json.dumps(data))
-
-
-# def get_tiles(request, s, z, x, y):
-#     from urllib.request import urlopen
-#     url = 'http://{0}.tile.osm.org/{1}/{2}/{3}.png'
-#     return HttpResponse(urlopen(url.format(s, int(z), int(x), int(y))))

@@ -233,8 +233,7 @@ var Interface = {
             interval = setInterval(function() {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     map.removeLayer(my_point);
-                    map.setView([position.coords.latitude, position.coords.longitude]);
-                    my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: marker}).addTo(map);
+                    my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: my_marker}).addTo(map);
                 });
             }, 5000);
         }
@@ -771,7 +770,7 @@ $('#freight_transport').click(function() {
     }
 });
 
-$('#positon').click(function() {
+$('#position').click(function() {
     /*
     клик по кнопке позиционирования
     */
@@ -785,7 +784,7 @@ $('#positon').click(function() {
         /*
         если кнопка не активна, включить
         */
-        interface.set_position(1);
+        Interface.set_position(1);
     }
 });
 

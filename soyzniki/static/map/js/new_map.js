@@ -233,8 +233,7 @@ var Interface = {
             interval = setInterval(function() {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     map.removeLayer(my_point);
-                    map.setView([position.coords.latitude, position.coords.longitude]);
-                    my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: marker}).addTo(map);
+                    my_point = L.marker([position.coords.latitude, position.coords.longitude], {icon: my_marker}).addTo(map);
                 });
             }, 5000);
         }
@@ -262,19 +261,19 @@ var Interface = {
             transport: Storage.get_filters().transport,
             search: Storage.get_filters().search
         }
-        if (Storage.get_points().data) {
-            add_point(Storage.get_points().data);
-        }
-        else {
-            $.ajax({
-                url: '/map/find_point',
-                type: 'POST',
-                data: request
-            }).done(function(data) {
-                Storage.set_points(data);
-                add_point(data);
-            });
-        }
+        // if (Storage.get_points().data) {
+            // add_point(Storage.get_points().data);
+        // }
+        // else {
+        $.ajax({
+            url: '/map/find_point',
+            type: 'POST',
+            data: request
+        }).done(function(data) {
+            // Storage.set_points(data);
+            add_point(data);
+        });
+        // }
 
         function add_point(point_data) {
             /*
@@ -660,8 +659,12 @@ function initialaze() {
     Storage.load_storage();
     Interface.load_interface();
     L.tileLayer('https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-    if (Storage.get_map().coords) {
-        map.setView(Storage.get_map().coords, Storage.get_map().zoom);
+    var map_cookie;
+    var cookie_name = `map_${Storage.country}`;
+    if($.cookie(cookie_name) !== undefined) {
+        map_cookie = JSON.parse($.cookie(cookie_name));
+        map.setView(map_cookie.center, map_cookie.zoom);
+        $('#icons').scrollTop(map_cookie.scroll);
     }
     else {
         $.ajax({
@@ -691,7 +694,7 @@ function set_url() {
     if (Storage.get_filters().search) {
         url = url + `${Storage.get_filters().search.replace(' ', '+')}/`;
     }
-    history.pushState('', '', url);
+    history.pushState('', '', url.toLowerCase());
 }
 
 $(document).ready(function() {
@@ -699,13 +702,16 @@ $(document).ready(function() {
 });
 
 $(window).unload(function() {
-    Storage.set_map({
-        coords: [map.getCenter().lat, map.getCenter().lng],
+    var map_cookie = {
+        center: map.getCenter(),
         zoom: map.getZoom(),
-        scroll: $('#icons').scrollTop()
+        scroll: $('#icons').scrollTop(),
+    }
+    var cookie_name = `map_${Storage.country}`;
+    $.cookie(cookie_name, JSON.stringify(map_cookie),
+    {
+        path: '/map/'
     });
-    Storage.write_storage();
-    console.log(window.localStorage)
 });
 
 $('#passenger_transport').click(function() {
@@ -764,7 +770,7 @@ $('#freight_transport').click(function() {
     }
 });
 
-$('#positon').click(function() {
+$('#position').click(function() {
     /*
     клик по кнопке позиционирования
     */
@@ -778,7 +784,7 @@ $('#positon').click(function() {
         /*
         если кнопка не активна, включить
         */
-        interface.set_position(1);
+        Interface.set_position(1);
     }
 });
 

@@ -1,91 +1,148 @@
 from django.db import models
 from datetime import date
+from time import strftime
+from random import randint
+from user.models import User
 from PIL import Image
 from os import remove, chmod
 from soyzniki.settings import MEDIA_ROOT
 
 
-class SectionForum(models.Model):
-	title_section = models.CharField(
-		max_length=50,
-		verbose_name='Раздел форума'
-	)
-	description_section = models.CharField(
-		max_length=200,
-		verbose_name='Описание'
-	)
-	activ_section = models.BooleanField(
-		default=True,
-		verbose_name='Активна'
-	)
-	
-class ThemeSection(models.Model):
-	title_section = models.ForeignKey(SectionForum)
-	title_theme = models.CharField(
-		max_length=50,
-		verbose_name='Название темы'
-	)
-	date_create_theme = models.DateField(
-		default=date.today(),
-		verbose_name='Дата создания темы'
-	)
-	activ_theme = models.BooleanField(
-		default=True,
-		verbose_name='Активна'
-	)
-	close_theme = models.BooleanField(
-		default=False,
-		verbose_name='Закрыта'
-	)
-	user_create_theme = models.CharField(
-		max_length=50,
-		verbose_name='Имя пользователя'
-	)
+class Section(models.Model):
+    name = models.CharField(
+        max_length=50,
+        verbose_name='Раздел форума'
+    )
+    description = models.CharField(
+        max_length=200,
+        verbose_name='Описание'
+    )
+    visible = models.BooleanField(
+        default=True,
+        verbose_name='Доступна'
+    )
 
-class ImagesForum(models.Model):
+    class Meta:
+        db_table = 'section_forum',
+        verbose_name = 'Раздел'
+        verbose_name_plural = 'Разделы'
 
-	def path_upload(self, filename):
-		tmp = filename.split('.')
-		type_file = tmp[-1]
-		rand_name = []
-		for i in range(30):
-			rand_name.append(chr(randint(97, 123)))
-		name = strftime('forum/%Y/%m/') + '{0}.{1}'.format(
-			''.join(rand_name),
-			type_file.lower()
-		)
-		return name
+    def __str__(self):
+        return '{}'.format(self.name)
 
-	image = models.ImageField(
-		blank=True, 
-		upload_to=path_upload, 
-		verbose_name='Ссылка картинки'
-	)
 
-class MassageTheme(models.Model):
-	title_theme = models.ForeignKey(ThemeSection)
-	text_massage = models.CharField(
-		max_length=1000,
-		verbose_name='Текст сообщения'
-	)
-	question = models.BooleanField(
-		default=True,
-		verbose_name='Вопрос?'
-	)
-	user = models.CharField(
-		max_length=50,
-		verbose_name='Пользователь'
-	)
-	date_create_massage = models.DateField(
-		default=date.today(),
-		verbose_name='Дата создания сообщения'
-	)
-	image = models.ForeignKey(ImagesForum),
-	rating_positive = models.IntegerField(
-		default=0,
-		verbose_name='Позитивный рейтинг'
-	)
-	rating_negative = models.IntegerField(
-		default=0,
-		verbose_name='Негативный рейтинг'
-	)
+class Theme(models.Model):
+    section = models.ForeignKey(
+        Section,
+        related_name='section_theme',
+        verbose_name='Раздел форума'
+    )
+    name = models.CharField(
+        max_length=50,
+        verbose_name='Название темы'
+    )
+    date_create = models.DateField(
+        default=date.today(),
+        verbose_name='Дата создания темы'
+    )
+    visible = models.BooleanField(
+        default=True,
+        verbose_name='Доступна'
+    )
+    closed = models.BooleanField(
+        default=False,
+        verbose_name='Закрыта'
+    )
+    user = models.ForeignKey(
+        User,
+        related_name='user_theme',
+        verbose_name='Пользователь'
+    )
+
+    class Meta:
+        db_table = 'themes_forum',
+        verbose_name = 'Тема'
+        verbose_name_plural = 'Темы'
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+
+class Images(models.Model):
+
+    def path_upload(self, filename):
+        tmp = filename.split('.')
+        type_file = tmp[-1]
+        rand_name = []
+        for i in range(30):
+            rand_name.append(chr(randint(97, 123)))
+        name = strftime('forum/%Y/%m/') + '{0}.{1}'.format(
+            ''.join(rand_name),
+            type_file.lower()
+        )
+        return name
+    id = models.BigAutoField(
+        primary_key=True
+    )
+    image = models.ImageField(
+        blank=True,
+        upload_to=path_upload,
+        verbose_name='Изображение'
+    )
+    prev_image = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        verbose_name='Уменьшеная копия'
+    )
+
+    class Meta:
+        '''
+            вместо этого коментария и слова pass опиши все как для прошлых маделей.
+            Базу придется удалить и созздать по новой потом, так как возможно таблицы создались
+            но в имени есть префикс. Переопредели методы сохранения и удаления для картинок,
+            пример возми в новостях.
+            В настройках sublime text укажи что бы табуляция заменялась на пробелы, так как даже
+            эта хрень влияет на работу.
+            позвони потом
+        '''
+        pass
+
+
+class Message(models.Model):
+    id = models.BigAutoField(
+        primary_key=True
+    )
+    theme = models.ForeignKey(
+        Theme,
+        related_name='message_theme'
+    )
+    text = models.CharField(
+        max_length=1000,
+        verbose_name='Текст сообщения'
+    )
+    question = models.BooleanField(
+        default=True,
+        verbose_name='Вопрос?'
+    )
+    user = models.ForeignKey(
+        User,
+        related_name='user_message',
+        verbose_name='Пользователь'
+    )
+    date_create = models.DateField(
+        default=date.today(),
+        verbose_name='Дата создания сообщения'
+    )
+    image = models.ManyToManyField(
+        Images,
+        verbose_name='Прикрепленные изображения'
+    )
+    positive = models.IntegerField(
+        default=0,
+        verbose_name='Позитивный рейтинг'
+    )
+    negative = models.IntegerField(
+        default=0,
+        verbose_name='Негативный рейтинг'
+    )

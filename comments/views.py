@@ -1,3 +1,14 @@
+'''
+Обработка комментариев, не является самостоятельным
+приложениеим, используется в других приложениях.
+Пример вызова:
+    comments = view_comments(
+    request,
+    str(News.__module__), # Приложение в котором используется
+    str(News.__name__),   # Название модели в которой используется
+    news.id               # id записи в которой добавляются
+)
+'''
 from comments.models import Comments
 from comments.forms import CommentsForm
 from django.template.loader import render_to_string
@@ -8,6 +19,9 @@ from django.contrib import messages
 
 
 def view_comments(request, application, model, record_id):
+    '''
+    добавление на страницу списка добавленных комментариев
+    '''
     all_comments = Comments.objects.filter(
         applications=application,
         model=model,
@@ -31,6 +45,9 @@ def view_comments(request, application, model, record_id):
 
 
 def add(request):
+    '''
+    обработка добавления коментария в базу
+    '''
     try:
         page = request.META['HTTP_REFERER']
     except KeyError:

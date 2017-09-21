@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from soyzniki.models import Country, Region, District, City, IP
+from soyzniki.models import Country, Region, District, City
 from user.models import User
 from django.http import HttpResponse, Http404
 from soyzniki.main.auth import is_login, user_id
@@ -8,6 +8,21 @@ from django.core.cache import cache
 
 
 def load_list(request):
+    '''
+    Получение списка стран, облостей, районов, городов
+    исходя из связей. На вход подается значение введенное
+    пользователем в поле ввода.
+    Если вводится название страны
+    то передается только введенное значение.
+    Если
+    вводится область, то передается введенное значение и id
+    страны выбранно  ранее.
+    Если вводится район, то передается введенное значение и
+    id области выбранной ранее.
+    Eсли вводится населенный пункт, передается введенное значение
+    и id района выбранноего ранее.
+
+    '''
     if request.method == 'POST' and request.is_ajax():
         if len(request.POST) == 1:
             value = request.POST['value']
@@ -53,6 +68,12 @@ def load_list(request):
 
 
 def get_position(request):
+    '''
+    Получение координат выбранной строны, обласьти,
+    района, населенного пункта.
+    Используется для позиционировании карты при добовлении
+    точки на карту или при редактировании ее данных.
+    '''
     if request.method == 'POST' and request.is_ajax():
         element = request.POST['element']
         value = request.POST['value']
@@ -94,60 +115,3 @@ def get_position(request):
                 'longitude': city.longitude
             })
         return HttpResponse(json.dumps(data))
-
-
-def get_weather(request):
-    if request.method == 'POST' and request.is_ajax():
-        from urllib.request import urlopen
-        url_lat_lon = 'http://api.openweathermap.org/data/2.5/forecast?lat={0}&lon={1}&units=metric&lang=ru&APPID=909c60f9eb2fb79e524f73130c88bf81'
-        url_counrty = 'http://api.openweathermap.org/data/2.5/forecast?q={0},{1}&units=metric&lang=ru&APPID=909c60f9eb2fb79e524f73130c88bf81'
-        if is_login(request):
-            user = User.objects.get(id=user_id(request))
-            district = user.district
-            if cache.get('weather_{}'.format(district.name_en.replace(' ', '_'))) != None:
-                data = json.dumps(cache.get('weather_{}'.format(
-                    district.name_en.replace(' ', '_'))))
-            else:
-                try:
-                    data = urlopen(
-                        url_lat_lon.format(
-                            district.latitude,
-                            district.longitude
-                        )
-                    ).read().decode('utf-8')
-                except Exception:
-                    raise Http404
-                cache.set(
-                    'weather_{}'.format(district.name_en.replace(' ', '_')),
-                    json.loads(data),
-                    86400
-                )
-        else:
-            try:
-                address = request.META['REMOTE_ADDR']
-            except KeyError:
-                pass
-            geo_data = json.loads(
-                urlopen('http://ip-api.com/json/{}'.format(address)).read().decode('utf-8'))
-            country_code = geo_data['countryCode']
-            country = Country.objects.get(double_code=country_code)
-            if cache.get('weather_{}'.format(country.name_en.replace(' ', '_'))) != None:
-                data = json.dumps(cache.get('weather_{}'.format(
-                    country.name_en.replace(' ', '_'))))
-            else:
-                try:
-                    data = urlopen(
-                        url_counrty.format(
-                            country.city_country.name_en,
-                            country.double_code
-                        )
-                    ).read().decode('utf-8')
-                except Exception:
-                    raise Http404
-                cache.set(
-                    'weather_{}'.format(country.name_en.replace(' ', '_')),
-                    json.loads(data),
-                    86400
-                )
-        return HttpResponse(data)
-

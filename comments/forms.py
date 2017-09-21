@@ -3,7 +3,9 @@ from comments.models import Comments
 
 
 class CommentsForm(forms.ModelForm):
-
+    '''
+    Форма добавление комментария к записи
+    '''
     class Meta:
         model = Comments
         fields = '__all__'

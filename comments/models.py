@@ -57,6 +57,10 @@ class Comments(models.Model):
         return '{}'.format(self.title)
 
     def show_record(self):
+        '''
+        Создание ссылки для админки сайта на запись
+        для которой сделан коментарий.
+        '''
         app = self.applications.split('.')[0]
         import_model = __import__('{0}'.format(app))
         models = getattr(import_model, 'models')

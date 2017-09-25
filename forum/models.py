@@ -95,6 +95,12 @@ class Images(models.Model):
         default='',
         verbose_name='Уменьшеная копия'
     )
+    name = models.CharField(
+        max_length=255,
+        blank=True,
+        default='Image',
+        verbose_name='Название изображения'
+    )
 
     class Meta:
         '''
@@ -106,7 +112,52 @@ class Images(models.Model):
             эта хрень влияет на работу.
             позвони потом
         '''
-        pass
+        db_table = 'images_forum',
+        verbose_name = 'Картинка'
+        verbose_name_plural = 'Картинки'
+
+    def delete(self):
+        image = '{0}/{1}'.format(MEDIA_ROOT, self.image)
+        prev_image = '{0}/{1}'.format(MEDIA_ROOT, self.prev_image)
+        super(Images, self).delete()
+        remove(image)
+        remove(prev_image)
+
+    def save(self):
+        if self.id:
+            image_in_base = Images.objects.get(id=self.id)
+            if self.image != image_in_base.image:
+                image = '{0}/{1}'.format(
+                    MEDIA_ROOT, image_in_base.image)
+                prev_image = '{0}/{1}'.format(
+                    MEDIA_ROOT, image_in_base.prev_image)
+                remove(image)
+                remove(prev_image)
+                super(Images, self).save()
+                tmp = str(self.image).split('/')
+                tmp[-1] = '{0}{1}'.format('min_', tmp[-1])
+                self.prev_image = '/'.join(tmp)
+                super(Images, self).save()
+                self.load_image(
+                    '{0}/{1}'.format(MEDIA_ROOT, self.image),
+                    '{0}/{1}'.format(MEDIA_ROOT, self.prev_image),
+                )
+            else:
+                super(Images, self).save()
+        else:
+            super(Images, self).save()
+            tmp = str(self.image).split('/')
+            tmp[-1] = '{0}{1}'.format('min_', tmp[-1])
+            self.prev_image = '/'.join(tmp)
+            self.name = '{0} {1}'.format(self.name, self.id)
+            super(Images, self).save()
+            self.load_image(
+                '{0}/{1}'.format(MEDIA_ROOT, self.image),
+                '{0}/{1}'.format(MEDIA_ROOT, self.prev_image),
+            )
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class Message(models.Model):

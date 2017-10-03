@@ -13,8 +13,7 @@ class Section(models.Model):
         max_length=50,
         verbose_name='Раздел форума'
     )
-    description = models.CharField(
-        max_length=200,
+    description = models.TextField(
         verbose_name='Описание'
     )
     visible = models.BooleanField(
@@ -23,7 +22,7 @@ class Section(models.Model):
     )
 
     class Meta:
-        db_table = 'section_forum',
+        db_table = 'section_forum'
         verbose_name = 'Раздел'
         verbose_name_plural = 'Разделы'
 
@@ -60,7 +59,7 @@ class Theme(models.Model):
     )
 
     class Meta:
-        db_table = 'themes_forum',
+        db_table = 'themes_forum'
         verbose_name = 'Тема'
         verbose_name_plural = 'Темы'
 
@@ -82,6 +81,7 @@ class Images(models.Model):
         )
         return name
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     image = models.ImageField(
@@ -103,16 +103,7 @@ class Images(models.Model):
     )
 
     class Meta:
-        '''
-            вместо этого коментария и слова pass опиши все как для прошлых маделей.
-            Базу придется удалить и созздать по новой потом, так как возможно таблицы создались
-            но в имени есть префикс. Переопредели методы сохранения и удаления для картинок,
-            пример возми в новостях.
-            В настройках sublime text укажи что бы табуляция заменялась на пробелы, так как даже
-            эта хрень влияет на работу.
-            позвони потом
-        '''
-        db_table = 'images_forum',
+        db_table = 'images_forum'
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
 
@@ -162,19 +153,19 @@ class Images(models.Model):
 
 class Message(models.Model):
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     theme = models.ForeignKey(
         Theme,
         related_name='message_theme'
     )
-    text = models.CharField(
-        max_length=1000,
+    text = models.TextField(
         verbose_name='Текст сообщения'
     )
     question = models.BooleanField(
         default=True,
-        verbose_name='Вопрос?'
+        verbose_name='Вопрос'
     )
     user = models.ForeignKey(
         User,
@@ -197,3 +188,8 @@ class Message(models.Model):
         default=0,
         verbose_name='Негативный рейтинг'
     )
+
+    class Meta:
+        db_table = 'message_forum'
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'

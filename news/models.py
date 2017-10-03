@@ -31,6 +31,7 @@ class Images(models.Model):
         return name
 
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     full_image = models.ImageField(
@@ -151,9 +152,6 @@ class Images(models.Model):
 
 
 class Rubric(models.Model):
-    id = models.BigAutoField(
-        primary_key=True
-    )
     name_ru = models.CharField(
         max_length=50,
         verbose_name='название рубрики'
@@ -178,6 +176,7 @@ class Rubric(models.Model):
 
 class News(models.Model):
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     country = models.ForeignKey(

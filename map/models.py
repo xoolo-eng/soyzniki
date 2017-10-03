@@ -18,9 +18,6 @@ class Services(models.Model):
     def __str__(self):
         return '{}'.format(self.name_ru)
 
-    id = models.BigAutoField(
-        primary_key=True
-    )
     name_ru = models.CharField(
         max_length=30,
         unique=True,

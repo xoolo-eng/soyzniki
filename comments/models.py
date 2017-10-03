@@ -5,6 +5,7 @@ from datetime import datetime
 
 class Comments(models.Model):
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     applications = models.CharField(
@@ -67,7 +68,12 @@ class Comments(models.Model):
         record_model = getattr(models, self.model)
         record = record_model.objects.get(id=self.record_id)
         return '''<a target="_blank" href="/admin/{0}/{1}/{2}/change/">
-                    {3}</a>'''.format(app, self.model.lower(), self.record_id, record)
+                    {3}</a>'''.format(
+            app,
+            self.model.lower(),
+            self.record_id,
+            record
+        )
 
     show_record.short_description = 'Запись'
     show_record.allow_tags = True

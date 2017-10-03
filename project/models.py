@@ -3,9 +3,6 @@ from soyzniki.models import Country
 
 
 class Feedback(models.Model):
-    id = models.BigAutoField(
-        primary_key=True
-    )
     name = models.TextField(
         verbose_name='Имя'
     )
@@ -28,6 +25,7 @@ class Feedback(models.Model):
 
 class Visitor(models.Model):
     id = models.BigAutoField(
+        max_length=21,
         primary_key=True
     )
     second_id = models.CharField(

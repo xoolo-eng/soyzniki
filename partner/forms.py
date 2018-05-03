@@ -513,14 +513,14 @@ class DelPartner(forms.Form):
             user = User.objects.get(id=self.cleaned_data.get('user_id'))
             secret = Secret.objects.get(user_id=self.cleaned_data.get('user_id'))
         except User.DoesNotExist:
-            self.add_error('password', 'Не верный проль')
+            self.add_error('password', 'Не верный пароль')
             raise forms.ValidationError('Ошибка ввода')
         else:
             if (user.hash_passwd != hash_user_pass(
                 self.cleaned_data.get('password'),
                 secret.sol
             )):
-                self.add_error('password', 'Не верный проль')
+                self.add_error('password', 'Не верный пароль')
                 raise forms.ValidationError('Ошибка ввода')
         return self.cleaned_data
 
